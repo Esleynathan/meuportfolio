@@ -1,0 +1,73 @@
+{
+  "navbar": {
+    "logo": "</Desenvolvedor Full-Stack>",
+    "home": "Início",
+    "about": "Sobre",
+    "skills": "Skills",
+    "projects": "Projetos",
+    "contact": "Contato",
+    "darkMode": "Escuro",
+    "lightMode": "Claro",
+    "english": "English",
+    "portuguese": "Português"
+  },
+  "hero": {
+    "greeting": "Olá, sou",
+    "title": "Desenvolvedor Full-Stack Python",
+    "description1": "Construindo aplicações web escaláveis e modernas",
+    "description2": "com Django, Angular e boas práticas de engenharia de software",
+    "viewProjects": "Ver Projetos",
+    "downloadCV": "Download CV",
+    "githubLabel": "GitHub",
+    "linkedinLabel": "LinkedIn",
+    "emailLabel": "Email"
+  },
+  "about": {
+    "title": "Sobre Mim",
+    "p1": "Desenvolvedor Full-Stack Python com sólida experiência em construção de aplicações web escaláveis utilizando Django, Django REST Framework, Flask, Angular e React.",
+    "p2": "Engenheiro de Computação formado pela UniCarioca (2025) e cursando MBA em Engenharia de Software com IA na FullCycle. Atualmente atuando como Desenvolvedor Full Stack Python/Django na EDS (dentro do INEA - Instituto Estadual do Ambiente).",
+    "p3": "Experiência em desenvolvimento de APIs RESTful de alta performance, gerenciamento de bancos de dados PostgreSQL e Oracle, e trabalho em equipes ágeis (Scrum). Foco em código limpo, boas práticas de engenharia de software e documentação técnica detalhada.",
+    "p4": "Busco continuamente aprimorar minhas habilidades técnicas e contribuir para projetos que gerem impacto real, aplicando os conhecimentos adquiridos em Python, Django, Angular/React, Docker e arquitetura de software moderna.",
+    "imageAlt": "Ésley Nathan - Desenvolvedor Full-Stack Python"
+  },
+  "skills": {
+    "title": "Skills Técnicas",
+    "loading": "Carregando skills...",
+    "error": "Erro ao carregar skills. Tente novamente mais tarde.",
+    "retry": "Tentar Novamente",
+    "proficiency": "Proficiência",
+    "emptyState1": "Nenhuma skill cadastrada ainda.",
+    "emptyState2": "Adicione suas skills via Django Admin."
+  },
+  "projects": {
+    "title": "Projetos em Destaque",
+    "loading": "Carregando projetos...",
+    "error": "Erro ao carregar projetos. Tente novamente mais tarde.",
+    "retry": "Tentar Novamente",
+    "featured": "⭐ Destaque",
+    "code": "Código",
+    "demo": "Demo",
+    "emptyState1": "Nenhum projeto cadastrado ainda.",
+    "emptyState2": "Adicione seus projetos via Django Admin."
+  },
+  "contact": {
+    "title": "Contato",
+    "successMessage": "✓ Mensagem enviada com sucesso! Entrarei em contato em breve.",
+    "name": "Nome",
+    "email": "Email",
+    "subject": "Assunto",
+    "message": "Mensagem",
+    "send": "Enviar Mensagem",
+    "sending": "Enviando...",
+    "required": "Este campo é obrigatório",
+    "invalidEmail": "Email inválido",
+    "minLength": "Mínimo de {min} caracteres",
+    "error": "Erro ao enviar mensagem. Tente novamente mais tarde."
+  },
+  "footer": {
+    "copyright": "© 2025 Ésley Nathan. Desenvolvido com Django REST + Angular + Tailwind CSS.",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "backToTop": "Voltar ao topo"
+}

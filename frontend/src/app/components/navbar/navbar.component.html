@@ -1,0 +1,143 @@
+<nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
+  <div class="container mx-auto px-4">
+    <div class="flex items-center justify-center md:justify-between h-16 relative">
+      <!-- Logo (Desktop: à esquerda, Mobile: escondido) -->
+      <div class="hidden md:block flex-shrink-0">
+        <a href="#hero" class="text-xl font-bold text-primary-600 font-mono">
+          {{ 'navbar.logo' | translate }}
+        </a>
+      </div>
+
+      <!-- Desktop Menu (Centralizado) -->
+      <div class="hidden md:block md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
+        <div class="flex items-center space-x-8">
+          <a href="#hero" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
+            {{ 'navbar.home' | translate }}
+          </a>
+          <a href="#about" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
+            {{ 'navbar.about' | translate }}
+          </a>
+          <a href="#skills" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
+            {{ 'navbar.skills' | translate }}
+          </a>
+          <a href="#projects" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
+            {{ 'navbar.projects' | translate }}
+          </a>
+          <a href="#contact" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
+            {{ 'navbar.contact' | translate }}
+          </a>
+        </div>
+      </div>
+
+      <!-- Theme & Language Toggles (Desktop: à direita) -->
+      <div class="hidden md:flex items-center gap-4 flex-shrink-0">
+        <!-- Dark Mode Toggle -->
+        <button
+          (click)="toggleDarkMode()"
+          class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+          aria-label="Toggle dark mode"
+        >
+          <i class="fas fa-moon text-gray-700 text-lg" *ngIf="!isDarkMode"></i>
+          <i class="fas fa-sun text-yellow-500 text-lg" *ngIf="isDarkMode"></i>
+        </button>
+
+        <!-- Language Toggle -->
+        <button
+          (click)="toggleLanguage()"
+          class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 text-sm font-semibold text-gray-700"
+          aria-label="Toggle language"
+        >
+          {{ currentLang === 'pt' ? 'EN' : 'PT' }}
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden absolute right-0">
+        <button
+          (click)="toggleMobileMenu()"
+          class="text-gray-700 hover:text-primary-600 focus:outline-none p-2"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              *ngIf="!mobileMenuOpen"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+              *ngIf="mobileMenuOpen"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div *ngIf="mobileMenuOpen" class="md:hidden pb-4 pt-4 border-t border-gray-200">
+      <div class="flex flex-col space-y-4">
+        <a
+          href="#hero"
+          (click)="closeMobileMenu()"
+          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+        >
+          {{ 'navbar.home' | translate }}
+        </a>
+        <a
+          href="#about"
+          (click)="closeMobileMenu()"
+          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+        >
+          {{ 'navbar.about' | translate }}
+        </a>
+        <a
+          href="#skills"
+          (click)="closeMobileMenu()"
+          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+        >
+          {{ 'navbar.skills' | translate }}
+        </a>
+        <a
+          href="#projects"
+          (click)="closeMobileMenu()"
+          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+        >
+          {{ 'navbar.projects' | translate }}
+        </a>
+        <a
+          href="#contact"
+          (click)="closeMobileMenu()"
+          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
+        >
+          {{ 'navbar.contact' | translate }}
+        </a>
+
+        <!-- Mobile Theme & Language Toggles -->
+        <div class="flex items-center justify-center gap-6 pt-4 border-t border-gray-200">
+          <button
+            (click)="toggleDarkMode()"
+            class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            aria-label="Toggle dark mode"
+          >
+            <i class="fas fa-moon text-gray-700" *ngIf="!isDarkMode"></i>
+            <i class="fas fa-sun text-yellow-500" *ngIf="isDarkMode"></i>
+            <span class="text-sm font-medium text-gray-700">{{ (isDarkMode ? 'navbar.lightMode' : 'navbar.darkMode') | translate }}</span>
+          </button>
+
+          <button
+            (click)="toggleLanguage()"
+            class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            aria-label="Toggle language"
+          >
+            <i class="fas fa-language text-gray-700"></i>
+            <span class="text-sm font-medium text-gray-700">{{ (currentLang === 'pt' ? 'navbar.english' : 'navbar.portuguese') | translate }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

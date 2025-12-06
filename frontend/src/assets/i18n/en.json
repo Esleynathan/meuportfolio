@@ -1,0 +1,73 @@
+{
+  "navbar": {
+    "logo": "</Full-Stack Developer>",
+    "home": "Home",
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact",
+    "darkMode": "Dark",
+    "lightMode": "Light",
+    "english": "English",
+    "portuguese": "Português"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "title": "Full-Stack Python Developer",
+    "description1": "Building scalable and modern web applications",
+    "description2": "with Django, Angular and software engineering best practices",
+    "viewProjects": "View Projects",
+    "downloadCV": "Download CV",
+    "githubLabel": "GitHub",
+    "linkedinLabel": "LinkedIn",
+    "emailLabel": "Email"
+  },
+  "about": {
+    "title": "About Me",
+    "p1": "Full-Stack Python Developer with solid experience in building scalable web applications using Django, Django REST Framework, Flask, Angular and React.",
+    "p2": "Computer Engineer graduated from UniCarioca (2025) and pursuing MBA in Software Engineering with AI at FullCycle. Currently working as Full Stack Python/Django Developer at EDS (within INEA - State Environmental Institute).",
+    "p3": "Experience in developing high-performance RESTful APIs, managing PostgreSQL and Oracle databases, and working in agile teams (Scrum). Focus on clean code, software engineering best practices and detailed technical documentation.",
+    "p4": "Continuously seeking to improve my technical skills and contribute to projects that generate real impact, applying knowledge acquired in Python, Django, Angular/React, Docker and modern software architecture.",
+    "imageAlt": "Ésley Nathan - Full-Stack Python Developer"
+  },
+  "skills": {
+    "title": "Technical Skills",
+    "loading": "Loading skills...",
+    "error": "Error loading skills. Please try again later.",
+    "retry": "Try Again",
+    "proficiency": "Proficiency",
+    "emptyState1": "No skills registered yet.",
+    "emptyState2": "Add your skills via Django Admin."
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "loading": "Loading projects...",
+    "error": "Error loading projects. Please try again later.",
+    "retry": "Try Again",
+    "featured": "⭐ Featured",
+    "code": "Code",
+    "demo": "Demo",
+    "emptyState1": "No projects registered yet.",
+    "emptyState2": "Add your projects via Django Admin."
+  },
+  "contact": {
+    "title": "Contact",
+    "successMessage": "✓ Message sent successfully! I will contact you soon.",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "required": "This field is required",
+    "invalidEmail": "Invalid email",
+    "minLength": "Minimum {min} characters",
+    "error": "Error sending message. Please try again later."
+  },
+  "footer": {
+    "copyright": "© 2025 Ésley Nathan. Built with Django REST + Angular + Tailwind CSS.",
+    "github": "GitHub",
+    "linkedin": "LinkedIn"
+  },
+  "backToTop": "Back to top"
+}
