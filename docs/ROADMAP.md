@@ -46,12 +46,12 @@ Planejamento e acompanhamento do desenvolvimento do portfólio técnico.
 
 #### Fase 3A - Conteúdo Real (PENDENTE)
 **Entregas planejadas**:
-- [ ] Adicionar 3-5 projetos reais via Django Admin
+- [x] Adicionar 3-5 projetos reais via Django Admin
   - Títulos, descrições detalhadas, tecnologias
   - URLs do GitHub e demo (se aplicável)
   - Imagens/screenshots dos projetos
   - Marcar projetos featured
-- [ ] Adicionar todas as skills reais via Django Admin
+- [x] Adicionar todas as skills reais via Django Admin
   - Categorizar: Frontend, Backend, DevOps, Ferramentas
   - Definir níveis de proficiência (1-5)
   - URLs dos ícones (DevIcon CDN)
@@ -62,20 +62,18 @@ Planejamento e acompanhamento do desenvolvimento do portfólio técnico.
 
 **Status**: Infraestrutura pronta, aguardando curadoria manual de conteúdo via Django Admin.
 
-#### Fase 3B - Melhorias UX/Design Modernas ✅ (COMPLETO)
-**Objetivo**: Implementar visual moderno seguindo tendências 2025
+#### Fase 3B - Melhorias UX/Design Modernas ⏳ (EM ANDAMENTO)
+**Objetivo**: Implementar visual moderno e refinamentos de interface.
 
 **1. Hero Section Aprimorado** ✅
-- [x] Foto de perfil centralizada circular (w-48 h-48 md:w-56 md:h-56)
-- [x] Título principal impactante com destaque no nome (span amarelo)
+- [x] Título principal impactante com destaque gradiente no nome e animação de aceno.
 - [x] Subtitle descritivo "Desenvolvedor Full-Stack Python"
 - [x] Dois CTAs principais:
   - [x] Botão primário: "Ver Projetos ↓" (scroll suave para #projects)
   - [x] Botão secundário: "Download CV 📄" (download de PDF)
 - [x] Background gradient animado (from-primary-600 via-primary-700 to-purple-800)
 - [x] Efeitos decorativos com blur e animate-pulse
-- [x] Social links com ícones Font Awesome (GitHub, LinkedIn, Email)
-- [x] Scroll indicator animado (seta com bounce)
+- [x] Social links com ícones, incluindo WhatsApp para contato direto.
 
 **2. About Section Layout em Duas Colunas** ✅
 - [x] Desktop: Foto à esquerda + texto à direita (flex-row)
@@ -105,87 +103,16 @@ Planejamento e acompanhamento do desenvolvimento do portfólio técnico.
 - [x] Truncamento de descrição com line-clamp-3
 - [x] Plugin @tailwindcss/line-clamp instalado
 
-**5. Micro-interações e Animações** ✅
-- [x] Animações CSS customizadas:
-  - [x] fadeIn (opacity 0 → 1)
-  - [x] slideUp (translateY(30px) → 0)
-  - [x] slideInLeft (translateX(-30px) → 0)
-- [x] Aplicadas no Hero (foto, título) e About (foto)
-- [x] Hover effects em todos os cards (duration-200 a duration-500)
-- [x] Transições suaves em links e botões
-- [x] Loading states já implementados (spinner + mensagens)
-
-**6. Call-to-Actions Evidentes** ✅
-- [x] Hierarquia clara: botão primário (bg-white) vs secundário (border-white)
-- [x] CTAs estratégicos no Hero
-- [x] Hover effects com scale-105
-- [x] Download CV disponível no Hero
-- [x] Links de projeto com visual destacado
-
-**7. Navegação Aprimorada** ✅
+**5. Navegação e Interações** ✅
 - [x] Smooth scroll funcionando (CSS: scroll-behavior: smooth)
-- [x] Botão "voltar ao topo" implementado:
-  - [x] Fixed position bottom-8 right-8
-  - [x] Aparece após scroll > 300px
-  - [x] Smooth scroll ao topo
-  - [x] Hover: scale-110 + bounce no ícone
-  - [x] @HostListener('window:scroll') no app.component.ts
-
-**8. Seção de Stats/Números (Opcional - "Impacto Visual")**
-- [ ] Grid 2x2 ou 4 colunas com números impactantes:
-  - "3+ anos de experiência"
-  - "15+ projetos entregues"
-  - "5 tecnologias dominadas"
-  - "100% dedicação"
-- [ ] Ícones representativos para cada stat
-- [ ] Background diferenciado (ex: bg-primary-50)
-
-#### Decisões de Design UX
-
-**Layout Escolhido para About:**
-- **Opção A - Foto centralizada** (mais limpo, foco no texto)
-  ```html
-  <div class="flex justify-center mb-8">
-    <img src="assets/images/profile.jpg"
-         class="w-48 h-48 rounded-full object-cover shadow-lg border-4 border-primary-100">
-  </div>
-  ```
-
-- **Opção B - Layout duas colunas** (mais dinâmico, foto tem mais destaque)
-  ```html
-  <div class="flex flex-col md:flex-row gap-8">
-    <img src="..." class="w-64 h-64 rounded-lg shadow-xl">
-    <div class="flex-1">textos...</div>
-  </div>
-  ```
-
-**Hero Section Mockup:**
-```
-┌─────────────────────────────────────────┐
-│  [Foto circular]                        │
-│                                         │
-│  Olá, sou Ésley Nathan                  │
-│  Desenvolvedor Full-Stack Python        │
-│                                         │
-│  "Construindo aplicações web            │
-│   escaláveis com Django e Angular"      │
-│                                         │
-│  [Ver Projetos] [Download CV]          │
-│                                         │
-│  [GitHub] [LinkedIn]                    │
-└─────────────────────────────────────────┘
-```
-
-**Paleta de Cores Mantida:**
-- Primary: Tons de azul (já configurado no Tailwind)
-- Acentos: Gradientes sutis
-- Backgrounds: Branco/cinza claro
-
-**Tipografia:**
-- Títulos: font-bold, text-4xl ou text-5xl
-- Subtítulos: font-semibold, text-xl
-- Corpo: text-lg, text-gray-700
-- Line-height: leading-relaxed para melhor leitura
+- [x] Botão "voltar ao topo" refinado para ser mais discreto (opacidade reduzida).
+- [x] Rodapé modernizado com layout limpo, responsivo e centralizado.
+- [x] Seção de Contato com largura ajustada para melhor UX em telas maiores.
+- [ ] `feat(theme)`: Implementar Dark Mode.
+- [x] `feat(navbar)`: Implementar Navbar Inteligente com Headroom.js.
+- [ ] `fix(layout)`: Corrigir Cores de Fundo das Seções.
+- [ ] `fix(layout)`: Corrigir Cores de Fundo das Seções. ⏳ **(EM ANDAMENTO)**
+- [ ] `feat(theme)`: Implementar Dark Mode. ⏳ **(EM ANDAMENTO)**
 
 **Estimativa total MVP 3**: 3-4 horas
 - Fase 3A (Conteúdo): 1-1.5h

@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
@@ -24,10 +25,32 @@ module.exports = {
         sans: ['Inter', 'sans-serif'],
         mono: ['Fira Code', 'monospace'],
       },
+      keyframes: {
+        wave: {
+          '0%': { transform: 'rotate(0.0deg)' },
+          '10%': { transform: 'rotate(14deg)' },
+          '20%': { transform: 'rotate(-8deg)' },
+          '30%': { transform: 'rotate(14deg)' },
+          '40%': { transform: 'rotate(-4deg)' },
+          '50%': { transform: 'rotate(10.0deg)' },
+          '60%': { transform: 'rotate(0.0deg)' },
+          '100%': { transform: 'rotate(0.0deg)' },
+        },
+        slideUp: {
+          'from': {
+            opacity: '0',
+            transform: 'translateY(20px)'
+          },
+          'to': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'waving-hand': 'wave 2.5s infinite',
+        'slide-up-fade': 'slideUp 0.6s ease-out forwards',
+      },
     },
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
   ],
 }
-

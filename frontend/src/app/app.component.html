@@ -20,7 +20,7 @@
 <button
   *ngIf="showBackToTop"
   (click)="scrollToTop()"
-  class="fixed bottom-8 right-8 bg-primary-600 hover:bg-primary-700 text-white w-12 h-12 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50 flex items-center justify-center group"
+  class="fixed bottom-8 right-8 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-white/80 text-gray-700 shadow-lg border border-gray-200 opacity-75 transition-all duration-300 ease-in-out hover:scale-110 hover:opacity-100 focus:outline-none dark:bg-gray-900/80 dark:text-gray-200 dark:border-gray-700 backdrop-blur-sm"
   [attr.aria-label]="'backToTop' | translate"
 >
   <i class="fas fa-chevron-up text-xl group-hover:animate-bounce"></i>

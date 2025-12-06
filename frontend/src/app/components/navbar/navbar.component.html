@@ -1,143 +1,61 @@
-<nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
-  <div class="container mx-auto px-4">
-    <div class="flex items-center justify-center md:justify-between h-16 relative">
-      <!-- Logo (Desktop: à esquerda, Mobile: escondido) -->
-      <div class="hidden md:block flex-shrink-0">
-        <a href="#hero" class="text-xl font-bold text-primary-600 font-mono">
+<!--
+  Navbar com Headroom.js, Dark Mode e efeito de vidro fosco.
+  - A lógica do Headroom está no .ts e os estilos em styles.css.
+  - O ngClass aplica uma sombra quando a página é rolada.
+  - O fundo usa opacidade e backdrop-blur para o efeito de vidro.
+-->
+<nav
+  class="transition-shadow duration-300"
+  [ngClass]="{ 'shadow-md dark:shadow-gray-800': isScrolled }"
+>
+  <div class="bg-white/85 dark:bg-gray-900/80 backdrop-blur-sm">
+    <div class="container mx-auto px-4">
+      <div class="relative flex justify-between items-center h-20">
+        <!-- Logo -->
+        <a href="#" (click)="closeMobileMenu()" class="text-xl font-bold text-gray-900 dark:text-white">
           {{ 'navbar.logo' | translate }}
         </a>
-      </div>
 
-      <!-- Desktop Menu (Centralizado) -->
-      <div class="hidden md:block md:absolute md:left-1/2 md:transform md:-translate-x-1/2">
-        <div class="flex items-center space-x-8">
-          <a href="#hero" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
-            {{ 'navbar.home' | translate }}
-          </a>
-          <a href="#about" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
-            {{ 'navbar.about' | translate }}
-          </a>
-          <a href="#skills" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
-            {{ 'navbar.skills' | translate }}
-          </a>
-          <a href="#projects" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
-            {{ 'navbar.projects' | translate }}
-          </a>
-          <a href="#contact" class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium">
-            {{ 'navbar.contact' | translate }}
-          </a>
+        <!-- Menu Desktop -->
+        <div class="hidden md:block absolute left-1/2 -translate-x-1/2">
+          <div class="flex items-center space-x-8">
+          <a href="#hero" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-white transition-colors">{{ 'navbar.home' | translate }}</a>
+          <a href="#about" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-white transition-colors">{{ 'navbar.about' | translate }}</a>
+          <a href="#skills" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-white transition-colors">{{ 'navbar.skills' | translate }}</a>
+          <a href="#projects" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-white transition-colors">{{ 'navbar.projects' | translate }}</a>
+          <a href="#contact" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-white transition-colors">{{ 'navbar.contact' | translate }}</a>
         </div>
-      </div>
+        </div>
 
-      <!-- Theme & Language Toggles (Desktop: à direita) -->
-      <div class="hidden md:flex items-center gap-4 flex-shrink-0">
-        <!-- Dark Mode Toggle -->
-        <button
-          (click)="toggleDarkMode()"
-          class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-          aria-label="Toggle dark mode"
-        >
-          <i class="fas fa-moon text-gray-700 text-lg" *ngIf="!isDarkMode"></i>
-          <i class="fas fa-sun text-yellow-500 text-lg" *ngIf="isDarkMode"></i>
-        </button>
+        <!-- Ícones (Tema e Idioma) e Menu Mobile -->
+        <div class="flex items-center space-x-4">
+          <!-- Botão Dark Mode -->
+          <button (click)="toggleDarkMode()" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-white transition-colors" [attr.aria-label]="(isDarkMode ? 'navbar.lightMode' : 'navbar.darkMode') | translate">
+            <i class="fas text-xl" [ngClass]="isDarkMode ? 'fa-sun' : 'fa-moon'"></i>
+          </button>
 
-        <!-- Language Toggle -->
-        <button
-          (click)="toggleLanguage()"
-          class="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200 text-sm font-semibold text-gray-700"
-          aria-label="Toggle language"
-        >
-          {{ currentLang === 'pt' ? 'EN' : 'PT' }}
-        </button>
-      </div>
+          <!-- Botão Idioma -->
+          <button (click)="toggleLanguage()" class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-white transition-colors" [attr.aria-label]="(currentLang === 'pt' ? 'navbar.english' : 'navbar.portuguese') | translate">
+            {{ currentLang === 'pt' ? 'EN' : 'PT' }}
+          </button>
 
-      <!-- Mobile Menu Button -->
-      <div class="md:hidden absolute right-0">
-        <button
-          (click)="toggleMobileMenu()"
-          class="text-gray-700 hover:text-primary-600 focus:outline-none p-2"
-        >
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path
-              *ngIf="!mobileMenuOpen"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-            <path
-              *ngIf="mobileMenuOpen"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
+          <!-- Botão Hamburger (Mobile) -->
+          <div class="md:hidden">
+            <button (click)="toggleMobileMenu()" class="text-gray-600 dark:text-gray-300 focus:outline-none">
+              <i class="fas text-2xl" [ngClass]="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div *ngIf="mobileMenuOpen" class="md:hidden pb-4 pt-4 border-t border-gray-200">
-      <div class="flex flex-col space-y-4">
-        <a
-          href="#hero"
-          (click)="closeMobileMenu()"
-          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
-        >
-          {{ 'navbar.home' | translate }}
-        </a>
-        <a
-          href="#about"
-          (click)="closeMobileMenu()"
-          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
-        >
-          {{ 'navbar.about' | translate }}
-        </a>
-        <a
-          href="#skills"
-          (click)="closeMobileMenu()"
-          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
-        >
-          {{ 'navbar.skills' | translate }}
-        </a>
-        <a
-          href="#projects"
-          (click)="closeMobileMenu()"
-          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
-        >
-          {{ 'navbar.projects' | translate }}
-        </a>
-        <a
-          href="#contact"
-          (click)="closeMobileMenu()"
-          class="text-gray-700 hover:text-primary-600 transition-colors duration-200 font-medium"
-        >
-          {{ 'navbar.contact' | translate }}
-        </a>
-
-        <!-- Mobile Theme & Language Toggles -->
-        <div class="flex items-center justify-center gap-6 pt-4 border-t border-gray-200">
-          <button
-            (click)="toggleDarkMode()"
-            class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-            aria-label="Toggle dark mode"
-          >
-            <i class="fas fa-moon text-gray-700" *ngIf="!isDarkMode"></i>
-            <i class="fas fa-sun text-yellow-500" *ngIf="isDarkMode"></i>
-            <span class="text-sm font-medium text-gray-700">{{ (isDarkMode ? 'navbar.lightMode' : 'navbar.darkMode') | translate }}</span>
-          </button>
-
-          <button
-            (click)="toggleLanguage()"
-            class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-            aria-label="Toggle language"
-          >
-            <i class="fas fa-language text-gray-700"></i>
-            <span class="text-sm font-medium text-gray-700">{{ (currentLang === 'pt' ? 'navbar.english' : 'navbar.portuguese') | translate }}</span>
-          </button>
-        </div>
-      </div>
+    <!-- Menu Mobile Dropdown -->
+    <div *ngIf="mobileMenuOpen" class="md:hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      <a href="#hero" (click)="closeMobileMenu()" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ 'navbar.home' | translate }}</a>
+      <a href="#about" (click)="closeMobileMenu()" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ 'navbar.about' | translate }}</a>
+      <a href="#skills" (click)="closeMobileMenu()" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ 'navbar.skills' | translate }}</a>
+      <a href="#projects" (click)="closeMobileMenu()" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ 'navbar.projects' | translate }}</a>
+      <a href="#contact" (click)="closeMobileMenu()" class="block py-3 px-4 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800">{{ 'navbar.contact' | translate }}</a>
     </div>
   </div>
 </nav>

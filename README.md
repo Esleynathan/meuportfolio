@@ -1,77 +1,35 @@
 # Portfolio Ésley Nathan
 
-> Portfólio técnico demonstrando expertise em desenvolvimento full-stack, arquitetura de software e boas práticas de engenharia.
+> Uma aplicação web completa desenvolvida como portfólio técnico. O projeto demonstra habilidades em desenvolvimento desacoplado (Django/Angular) e uma arquitetura de documentação projetada para colaboração eficiente com assistentes de IA.
 
-[![Status](https://img.shields.io/badge/status-MVP_1_completo-green)](./docs/STATUS.md)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)]()
+[![Status](https://img.shields.io/badge/status-MVP_3_em_andamento-blue)](./docs/STATUS.md)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## Sobre o Projeto
+Este repositório contém o código-fonte do meu portfólio pessoal, um projeto full-stack que serve como uma demonstração prática de engenharia de software moderna, aplicando conceitos do meu MBA em Engenharia de Software com IA.
 
-Plataforma de portfólio desenvolvida para demonstrar competências em:
+## ✨ Principais Características
 
-- Arquitetura moderna (API-first com Django REST)
-- Frontend com Angular e Tailwind CSS
-- Desenvolvimento multi-linguagem
-- Containerização com Docker
-- Sistemas concorrentes e escaláveis
-- Boas práticas (Clean Code, SOLID, Design Patterns)
+- **Arquitetura Desacoplada**: Backend API-first com Django REST Framework e Frontend SPA com Angular.
+- **Containerização Completa**: Ambiente de desenvolvimento e produção 100% containerizado com Docker e Docker Compose.
+- **Design Moderno e Responsivo**: Interface construída com Tailwind CSS, focada em UX e acessibilidade.
+- **Documentação Orientada a IA**: Estrutura de documentação atômica (`STATUS`, `ARCHITECTURE`, `CONTRIBUTING`) para otimizar a colaboração com assistentes de código.
 
-## Sobre
-
-Desenvolvedor Full-Stack e Engenheiro de Computação focado em demonstrar capacidades técnicas através de projetos práticos e bem documentados.
-
-## Stack Tecnológica
-
-### Backend
-- **Django REST Framework** - API RESTful
-- **PostgreSQL** - Banco de dados
-- **Python 3.11+**
-
-### Frontend
-- **Angular 17+** - Framework SPA
-- **TypeScript** - Tipagem estática
-- **Tailwind CSS** - Estilização
-- **RxJS** - Programação reativa
-
-### DevOps
-- **Docker** - Containerização
-- **Docker Compose** - Orquestração local
-- **Git** - Controle de versão
-
-## Estrutura do Projeto
-
-```
-portfolio-esley/
-├── backend/              # Django REST API
-│   ├── api/             # Apps Django
-│   ├── config/          # Configurações
-│   └── requirements.txt
-├── frontend/            # Angular App
-│   ├── src/
-│   ├── angular.json
-│   └── package.json
-├── docs/                # Documentação
-├── docker-compose.yml   # Orquestração
-└── README.md
-```
-
-## Quick Start
+## 🚀 Quick Start (Docker)
 
 ### Pré-requisitos
 - Docker e Docker Compose instalados
 - Git
 
 ### Rodando o projeto
-
 ```bash
-# Clone o repositório
-git clone <seu-repositorio>
+# 1. Clone o repositório
+git clone https://github.com/esleynathan/meuportfolio.git
 cd portfolio-esley
 
-# Inicie com Docker Compose
-docker-compose up -d
+# 2. Inicie os containers em modo detached
+docker-compose up -d --build
 
-# Acesse
+# 3. Acesse os serviços
 Frontend: http://localhost:4200
 Backend API: http://localhost:8000/api
 Django Admin: http://localhost:8000/admin
@@ -129,4 +87,4 @@ MIT License - Sinta-se livre para usar este projeto como referência.
 
 ---
 
-**Desenvolvido com Claude Code** - Demonstrando uso de IA na engenharia de software moderna.
+Este projeto foi desenvolvido em um fluxo de trabalho moderno, onde a arquitetura e as decisões estratégicas são orquestradas pelo desenvolvedor, com a implementação acelerada por assistentes de IA.

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SkillsService } from '../../services/skills.service';
 import { Skill } from '../../models/skill.model';
-import { TranslationService } from '../../services/translation.service';
+import { SkillsService } from '../../services/skills.service';
 
 @Component({
   selector: 'app-skills',
@@ -10,13 +9,37 @@ import { TranslationService } from '../../services/translation.service';
 })
 export class SkillsComponent implements OnInit {
   skills: Skill[] = [];
+  groupedSkills: { [key: string]: Skill[] } = {};
   isLoading = true;
   error: string | null = null;
 
-  constructor(
-    private skillsService: SkillsService,
-    private translationService: TranslationService
-  ) {}
+  // Mapeamento de ícones para categorias
+  categoryIcons: { [key: string]: string } = {
+    'Frontend': 'fas fa-laptop-code',
+    'Backend': 'fas fa-server',
+    'DevOps & Ferramentas': 'fas fa-tools',
+    'default': 'fas fa-cogs'
+  };
+
+  // Mapeamento de chaves da API para nomes de exibição
+  private categoryDisplayMap: { [key: string]: string } = {
+    'frontend': 'Frontend',
+    'backend': 'Backend',
+    'devops': 'DevOps & Ferramentas',
+    'tools': 'DevOps & Ferramentas',
+    'database': 'Database',
+    'other': 'Outros'
+  };
+
+  // Mapeamento de níveis de proficiência para % e nome de exibição
+  private proficiencyConfig: { [key: string]: { width: number; label: string } } = {
+    'basic': { width: 40, label: 'Básico' },
+    'intermediate': { width: 60, label: 'Intermediário' },
+    'advanced': { width: 80, label: 'Avançado' },
+    'expert': { width: 100, label: 'Expert' }
+  };
+
+  constructor(private skillsService: SkillsService) {}
 
   ngOnInit(): void {
     this.loadSkills();
@@ -30,18 +53,53 @@ export class SkillsComponent implements OnInit {
       next: (data) => {
         this.skills = data;
         this.isLoading = false;
+        this.groupSkillsByCategory();
       },
       error: (err) => {
-        this.error = this.translationService.translate('skills.error');
+        this.error = 'Erro ao carregar skills. Tente novamente mais tarde.';
         this.isLoading = false;
         console.error('Erro ao buscar skills:', err);
       }
     });
   }
 
+  groupSkillsByCategory(): void {
+    this.groupedSkills = this.skills.reduce((acc, skill) => {
+      const apiCategory = skill.category || 'other';
+      const category = this.categoryDisplayMap[apiCategory] || 'Outros';
+
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(skill);
+      return acc;
+    }, {} as { [key: string]: Skill[] });
+
+  }
+
   handleImageError(event: Event): void {
     // Se a imagem falhar ao carregar, esconde o elemento img
     const imgElement = event.target as HTMLImageElement;
     imgElement.style.display = 'none';
+  }
+
+  getGroupedSkillsKeys(): string[] {
+    // Ordena as chaves (categorias) com base no campo 'order' da primeira skill de cada grupo.
+    // Isso garante que as categorias apareçam na ordem definida no admin.
+    return Object.keys(this.groupedSkills).sort((a, b) => {
+      const orderA = this.groupedSkills[a][0]?.order ?? Infinity;
+      const orderB = this.groupedSkills[b][0]?.order ?? Infinity;
+      return orderA - orderB;
+    });
+  }
+
+  getProficiencyWidth(level: string | number): number {
+    return this.proficiencyConfig[String(level)]?.width || 0;
+  }
+
+  getProficiencyLabel(level: string | number): string {
+    const config = this.proficiencyConfig[String(level)];
+    // Só mostra o label se a barra for grande o suficiente
+    return config && config.width >= 40 ? config.label : '';
   }
 }

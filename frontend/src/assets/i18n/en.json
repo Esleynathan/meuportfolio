@@ -14,8 +14,7 @@
   "hero": {
     "greeting": "Hello, I'm",
     "title": "Full-Stack Python Developer",
-    "description1": "Building scalable and modern web applications",
-    "description2": "with Django, Angular and software engineering best practices",
+    "description": "A demonstration of modern software engineering, featuring decoupled development (Django/Angular) and an architecture designed for AI collaboration.",
     "viewProjects": "View Projects",
     "downloadCV": "Download CV",
     "githubLabel": "GitHub",
@@ -51,7 +50,9 @@
     "emptyState2": "Add your projects via Django Admin."
   },
   "contact": {
-    "title": "Contact",
+    "title": "Let's Work Together?",
+    "leftTitle": "Get in Touch",
+    "leftDescription": "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions. Feel free to contact me directly or use the form on the side.",
     "successMessage": "✓ Message sent successfully! I will contact you soon.",
     "name": "Name",
     "email": "Email",
@@ -65,9 +66,8 @@
     "error": "Error sending message. Please try again later."
   },
   "footer": {
-    "copyright": "© 2025 Ésley Nathan. Built with Django REST + Angular + Tailwind CSS.",
-    "github": "GitHub",
-    "linkedin": "LinkedIn"
+    "rights": "All rights reserved.",
+    "madeWith": "Made with"
   },
   "backToTop": "Back to top"
 }

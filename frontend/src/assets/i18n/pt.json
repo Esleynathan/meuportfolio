@@ -14,8 +14,7 @@
   "hero": {
     "greeting": "Olá, sou",
     "title": "Desenvolvedor Full-Stack Python",
-    "description1": "Construindo aplicações web escaláveis e modernas",
-    "description2": "com Django, Angular e boas práticas de engenharia de software",
+    "description": "Uma demonstração de engenharia de software moderna, com desenvolvimento desacoplado (Django/Angular) e uma arquitetura projetada para colaboração com IA.",
     "viewProjects": "Ver Projetos",
     "downloadCV": "Download CV",
     "githubLabel": "GitHub",
@@ -51,7 +50,9 @@
     "emptyState2": "Adicione seus projetos via Django Admin."
   },
   "contact": {
-    "title": "Contato",
+    "title": "Vamos Trabalhar Juntos?",
+    "leftTitle": "Entre em Contato",
+    "leftDescription": "Estou sempre aberto a discutir novos projetos, ideias criativas ou oportunidades para fazer parte de suas visões. Sinta-se à vontade para me contatar diretamente ou usar o formulário ao lado.",
     "successMessage": "✓ Mensagem enviada com sucesso! Entrarei em contato em breve.",
     "name": "Nome",
     "email": "Email",
@@ -65,9 +66,8 @@
     "error": "Erro ao enviar mensagem. Tente novamente mais tarde."
   },
   "footer": {
-    "copyright": "© 2025 Ésley Nathan. Desenvolvido com Django REST + Angular + Tailwind CSS.",
-    "github": "GitHub",
-    "linkedin": "LinkedIn"
+    "rights": "Todos os direitos reservados.",
+    "madeWith": "Desenvolvido com"
   },
   "backToTop": "Voltar ao topo"
 }
