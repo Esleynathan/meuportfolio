@@ -53,12 +53,12 @@ O projeto concluiu com sucesso o **MVP 4**, focado em otimizações de performan
 
 ## 🚀 Próximos Passos (MVP 5 - Deploy)
 
-**Objetivo**: Publicar a aplicação online em um ambiente de produção robusto e seguro.
+**Objetivo**: Publicar a aplicação online em um ambiente de produção robusto e seguro. Para um acompanhamento detalhado, consulte o **[Plano de Ação do MVP 5](./MVP5_DEPLOY_PLAN.md)**.
 
-1.  **Dockerização Completa** ⏳
-2.  **Deploy em Ambiente de Nuvem (VM)** ⏳
-3.  **Configuração de Domínio e DNS** ⏳
-4.  **Configuração de SSL/HTTPS com Let's Encrypt** ⏳
+1.  **Dockerização do Ambiente de Desenvolvimento** ⏳
+2.  **Dockerização do Ambiente de Produção** ⏳
+3.  **Deploy em Ambiente de Nuvem (VM)** ⏳
+4.  **Configuração de Domínio, DNS e SSL/HTTPS** ⏳
 
 ---
 
@@ -112,7 +112,7 @@ O projeto concluiu com sucesso o **MVP 4**, focado em otimizações de performan
   - [x] `feat(seo)`: Criar arquivo `sitemap.xml` para facilitar a indexação.
 
 ### 📅 MVP 5 - Deploy
-- Dockerização completa
+- Dockerização completa (Dev e Prod)
 - Deploy em VM
 - Domínio configurado
 - SSL/HTTPS
