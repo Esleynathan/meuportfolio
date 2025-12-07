@@ -44,21 +44,22 @@
                 *ngIf="!skill.icon"
                 class="w-12 h-12 mx-auto bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center"
               >
-                <i class="fas fa-code text-primary-600 text-2xl"></i>
+                <i class="fas fa-code text-primary-600 text-2xl" aria-hidden="true"></i>
               </div>
             </div>
 
             <!-- Nome da Skill -->
             <h4 class="font-bold text-base text-gray-900 dark:text-white mb-2 truncate" [title]="skill.name">{{ skill.name }}</h4>
 
+            <!-- Nível de Proficiência (Texto) -->
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">{{ getProficiencyLabel(skill.proficiency_level) }}</p>
+
             <!-- Barra de Proficiência -->
-            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-5 relative text-xs text-white flex items-center justify-center">
+            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
               <div
-                class="bg-gradient-to-r from-primary-500 to-purple-500 h-5 rounded-full absolute left-0 top-0 flex items-center justify-center"
-                [ngStyle]="{ 'width': getProficiencyWidth(skill.proficiency_level) + '%' }"
-              >
-                <span class="font-semibold">{{ getProficiencyLabel(skill.proficiency_level) }}</span>
-              </div>
+                class="bg-gradient-to-r from-primary-500 to-purple-500 h-2.5 rounded-full"
+                [style.width.%]="getProficiencyWidth(skill.proficiency_level)"
+              ></div>
             </div>
           </div>
         </div>
