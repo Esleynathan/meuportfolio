@@ -1,4 +1,8 @@
 {
+  "seo": {
+    "title": "Ésley Nathan - Portfólio de Desenvolvedor Full-Stack Python",
+    "description": "Portfólio de Ésley Nathan, Desenvolvedor Full-Stack Python especialista em Django, Angular e tecnologias web modernas. Descubra projetos, habilidades e experiência profissional."
+  },
   "navbar": {
     "logo": "</Desenvolvedor Full-Stack>",
     "home": "Início",

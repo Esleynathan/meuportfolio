@@ -12,6 +12,10 @@ import { SkillsComponent } from './components/skills/skills.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { ProjectsService } from './services/projects.service';
+import { SkillsService } from './services/skills.service';
+import { ContactService } from './services/contact.service';
+import { TranslateService } from './services/translate.service';
 import { TranslatePipe } from './pipes/translate.pipe';
 
 @NgModule({
@@ -32,7 +36,12 @@ import { TranslatePipe } from './pipes/translate.pipe';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [ // Serviços disponíveis para toda a aplicação
+    ProjectsService,
+    SkillsService,
+    ContactService,
+    TranslateService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,8 @@
 # Portfolio Ésley Nathan
 
-> Uma aplicação web completa desenvolvida como portfólio técnico. O projeto demonstra habilidades em desenvolvimento desacoplado (Django/Angular) e uma arquitetura de documentação projetada para colaboração eficiente com assistentes de IA.
+> Uma aplicação web completa desenvolvida como portfólio técnico. O projeto demonstra habilidades em desenvolvimento desacoplado (Django/Angular), otimizações de performance, SEO, acessibilidade e uma arquitetura de documentação projetada para colaboração eficiente com assistentes de IA.
 
-[![Status](https://img.shields.io/badge/status-MVP_3_em_andamento-blue)](./docs/STATUS.md)
+[![Status](https://img.shields.io/badge/status-MVP_4_Concluído-brightgreen)](./docs/STATUS.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 Este repositório contém o código-fonte do meu portfólio pessoal, um projeto full-stack que serve como uma demonstração prática de engenharia de software moderna, aplicando conceitos do meu MBA em Engenharia de Software com IA.
