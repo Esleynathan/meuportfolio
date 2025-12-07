@@ -50,5 +50,5 @@ module.exports = {
       },
     },
   },
-  plugins: [], // Removido plugin @tailwindcss/line-clamp que não estava instalado
+  plugins: [],
 }
