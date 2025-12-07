@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Skill } from '../../models/skill.model';
 import { SkillsService } from '../../services/skills.service';
+import { TranslationService } from '../../services/translation.service';
 
 @Component({
   selector: 'app-skills',
@@ -39,7 +40,10 @@ export class SkillsComponent implements OnInit {
     'expert': { width: 100, label: 'Expert' }
   };
 
-  constructor(private skillsService: SkillsService) {}
+  constructor(
+    private skillsService: SkillsService,
+    public translationService: TranslationService
+  ) {}
 
   ngOnInit(): void {
     this.loadSkills();
@@ -56,9 +60,8 @@ export class SkillsComponent implements OnInit {
         this.groupSkillsByCategory();
       },
       error: (err) => {
-        this.error = 'Erro ao carregar skills. Tente novamente mais tarde.';
+        this.error = this.translationService.translate('skills.error');
         this.isLoading = false;
-        console.error('Erro ao buscar skills:', err);
       }
     });
   }
@@ -98,8 +101,6 @@ export class SkillsComponent implements OnInit {
   }
 
   getProficiencyLabel(level: string | number): string {
-    const config = this.proficiencyConfig[String(level)];
-    // Só mostra o label se a barra for grande o suficiente
-    return config && config.width >= 40 ? config.label : '';
+    return this.proficiencyConfig[level]?.label || '';
   }
 }

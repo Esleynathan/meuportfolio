@@ -1,4 +1,8 @@
 {
+  "seo": {
+    "title": "Ésley Nathan - Full-Stack Python Developer Portfolio",
+    "description": "Portfolio of Ésley Nathan, a Full-Stack Python Developer specializing in Django, Angular, and modern web technologies. Discover projects, skills, and professional experience."
+  },
   "navbar": {
     "logo": "</Full-Stack Developer>",
     "home": "Home",
@@ -17,9 +21,9 @@
     "description": "A demonstration of modern software engineering, featuring decoupled development (Django/Angular) and an architecture designed for AI collaboration.",
     "viewProjects": "View Projects",
     "downloadCV": "Download CV",
-    "githubLabel": "GitHub",
-    "linkedinLabel": "LinkedIn",
-    "emailLabel": "Email"
+    "githubLabel": "Visit my GitHub profile",
+    "linkedinLabel": "Visit my LinkedIn profile",
+    "emailLabel": "Send me an email"
   },
   "about": {
     "title": "About Me",
