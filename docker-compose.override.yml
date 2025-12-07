@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  db:
+    ports:
+      # Expõe a porta do banco de dados para a máquina host para fins de desenvolvimento
+      - "5432:5432"
+
+  backend:
+    # Sobrescreve o comando de produção
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      # Habilita o modo de depuração para desenvolvimento
+      - DEBUG=True
+    volumes:
+      # Monta o código-fonte local no contêiner para hot-reloading
+      - ./backend:/app
+    ports:
+      # Expõe a porta do backend para a máquina host
+      - "8000:8000"
+
+  # O serviço 'nginx' do arquivo base será ignorado porque não o definimos aqui
+  # e vamos criar um novo serviço apenas para o desenvolvimento do frontend.
+  frontend:
+    build:
+      context: ./frontend
+      # Podemos usar o mesmo Dockerfile, mas vamos usar um comando diferente
+    container_name: portfolio-frontend-dev
+    # Comando para iniciar o servidor de desenvolvimento do Angular
+    command: ng serve --host 0.0.0.0 --port 4200
+    volumes:
+      # Monta o código-fonte local e mantém node_modules isolado no contêiner
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      # Expõe a porta do Angular para a máquina host
+      - "4200:4200"
