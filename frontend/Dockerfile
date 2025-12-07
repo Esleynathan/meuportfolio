@@ -25,7 +25,7 @@ FROM nginx:1.25-alpine
 
 # Copia os arquivos estáticos da build do Stage 1 para o diretório padrão do Nginx.
 # O output do build do Angular 15+ fica em 'dist/project-name/browser'
-COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html
+COPY --from=build /app/dist/frontend/ /usr/share/nginx/html
 
 # Copia a nossa configuração customizada do Nginx para o diretório de configurações do contêiner.
 COPY nginx.conf /etc/nginx/conf.d/default.conf

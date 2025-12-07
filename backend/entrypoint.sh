@@ -15,5 +15,8 @@ echo "Banco de dados iniciado"
 
 python manage.py migrate
 
+# Coleta os arquivos estáticos para a pasta /app/staticfiles
+python manage.py collectstatic --noinput
+
 # Executa o comando passado para o entrypoint (CMD do Dockerfile ou command do Compose)
 exec "$@"

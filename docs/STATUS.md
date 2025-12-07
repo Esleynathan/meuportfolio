@@ -38,9 +38,11 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
   - [x] Criar `frontend/Dockerfile` (multi-stage) para build Angular e servir com Nginx.
   - [x] Criar `frontend/nginx.conf` com regras de reverse proxy.
   - [x] Criar `.env.example` e garantir que `.env` está no `.gitignore`.
-- **Fase 3: Simulação do Ambiente de Produção Localmente** ⏳ **(Próxima Etapa)**
-  - [ ] Executar `docker-compose --profile prod up --build` para testar a stack de produção.
-  - [ ] Validar acesso via `http://localhost` e a comunicação Nginx ↔ API.
+- **Fase 3: Simulação do Ambiente de Produção Localmente** ⏳ **(Em Andamento)**
+  - [x] Preparar ambiente de produção para servir arquivos estáticos do Django (`collectstatic`).
+  - [x] Executar `docker-compose --profile prod up --build` para iniciar a stack de produção.
+  - [x] Validar acesso via `http://localhost` (Frontend) e `http://localhost/admin/` (Backend).
+  - [ ] (Opcional) Validar exposição externa via DNS dinâmico e port forwarding.
 - **Fase 4: Deploy em Nuvem** ⏳
   - [ ] Provisionar uma VM (Droplet/EC2) com Ubuntu.
   - [ ] Instalar Docker e Docker Compose na VM.

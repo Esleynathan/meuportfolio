@@ -545,6 +545,21 @@ Cada projeto será dockerizado e integrado à landing page.
 **Resultado**: ✅ **Ambiente de desenvolvimento Docker 100% funcional** com hot-reloading para backend e frontend.
 ---
 
+### Sessão 10 (2025-12-07) - MVP 5 Fase 2 - Preparação do Ambiente de Produção
+**Objetivo**: Garantir que o ambiente de produção sirva todos os arquivos estáticos corretamente.
+
+**Entregas**:
+- ✅ **Configuração de Arquivos Estáticos do Django**:
+  - **Problema**: O Django com `DEBUG=False` não serve seus próprios arquivos estáticos (CSS/JS do Admin).
+  - **Solução**:
+    - [x] Adicionado `STATIC_ROOT` no `settings.py`.
+    - [x] Adicionado o comando `collectstatic` ao `backend/entrypoint.sh`.
+    - [x] Criado um volume nomeado `static_data` no `docker-compose.yml` para compartilhar os arquivos estáticos entre o `backend` e o `nginx`.
+    - [x] Adicionada uma nova rota `location /static/` no `frontend/nginx.conf` para que o Nginx sirva os arquivos coletados.
+
+**Resultado**: ✅ **Ambiente de produção pronto para ser testado**, com o Nginx configurado para servir tanto a aplicação Angular quanto os arquivos estáticos do Django Admin.
+---
+
 ## Métricas de Sucesso
 
 | Métrica | Status | Observação |

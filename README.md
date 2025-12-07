@@ -25,8 +25,8 @@ cd portfolio-esley
 # 2. Crie o arquivo .env a partir do exemplo
 cp .env.example .env
 
-# 3. Inicie os contêineres (o docker-compose.override.yml será usado automaticamente)
-docker-compose up --build
+# 3. Inicie os contêineres usando o perfil "dev"
+docker-compose --profile dev up --build
 
 # 4. Acesse os serviços
 Frontend: http://localhost:4200 (com hot-reload)

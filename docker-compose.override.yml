@@ -16,23 +16,3 @@ services:
     ports:
       # Expõe a porta do backend para a máquina host
       - "8000:8000"
-
-  # Serviço dedicado para o desenvolvimento do frontend com hot-reloading.
-  frontend-dev:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile.dev # Usamos o Dockerfile de desenvolvimento
-    container_name: portfolio-frontend-dev
-    # O comando é alterado para que o servidor do Angular aceite conexões externas.
-    # O '--' garante que o argumento '--host 0.0.0.0' seja passado para o 'ng serve'.
-    command: npm start -- --host 0.0.0.0
-    volumes:
-      - ./frontend:/app # Hot-reload para o código-fonte
-      - frontend_node_modules:/app/node_modules # Volume nomeado para persistir node_modules
-    ports:
-      - "4200:4200"
-    networks:
-      - portfolio-network
-
-volumes:
-  frontend_node_modules:
