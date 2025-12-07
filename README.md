@@ -15,25 +15,29 @@ Este repositório contém o código-fonte do meu portfólio pessoal, um projeto 
 - **Documentação Orientada a IA**: Estrutura de documentação atômica (`STATUS`, `ARCHITECTURE`, `CONTRIBUTING`) para otimizar a colaboração com assistentes de código.
 
 ## 🚀 Quick Start (Docker)
-
-### Pré-requisitos
-- Docker e Docker Compose instalados
-- Git
-
-### Rodando o projeto
+ 
+### Ambiente de Desenvolvimento (com Hot-Reload)
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/esleynathan/meuportfolio.git
+git clone https://github.com/esleynathan/portfolio-esley.git
 cd portfolio-esley
 
-# 2. Inicie os containers em modo detached
-docker-compose up -d --build
+# 2. Inicie os contêineres (o docker-compose.override.yml será usado automaticamente)
+docker-compose up --build
 
 # 3. Acesse os serviços
-Frontend: http://localhost:4200
-Backend API: http://localhost:8000/api
-Django Admin: http://localhost:8000/admin
-API Docs (Swagger): http://localhost:8000/api/docs/
+Frontend: http://localhost:4200 (com hot-reload)
+Backend API: http://localhost:8000/api (com hot-reload)
+```
+
+### Ambiente de Produção (Simulado Localmente)
+Para testar a build de produção exatamente como ela irá para a nuvem.
+```bash
+# Inicie os contêineres usando apenas o arquivo de produção
+docker-compose -f docker-compose.yml up --build
+
+# Acesse a aplicação
+Frontend (Nginx): http://localhost
 ```
 
 ### Desenvolvimento local (sem Docker)
