@@ -2,8 +2,8 @@
 
 Planejamento e acompanhamento do desenvolvimento do portfólio técnico.
 
-**Última atualização**: 2025-12-05
-**Status**: MVP 2 COMPLETO ✅ | Próximo: MVP 3
+**Última atualização**: 2024-05-22
+**Status**: MVP 4 COMPLETO ✅ | Próximo: MVP 5
 
 ---
 
@@ -520,6 +520,29 @@ Cada projeto será dockerizado e integrado à landing page.
 
 **Resultado**: ✅ **MVP 3 FASE 3B COMPLETO** - UX/Design moderno implementado, aguardando apenas curadoria de conteúdo
 
+---
+
+### Sessão 9 (2025-12-07) - MVP 5 Fase 1 - Dockerização do Ambiente de Desenvolvimento
+**Objetivo**: Corrigir e estabilizar o ambiente de desenvolvimento com Docker.
+
+**Entregas**:
+- ✅ **Correção do Backend**:
+  - **Problema**: Comando `wait_for_db` não encontrado.
+  - **Causa**: Arquivo `wait_for_db.py` estava em múltiplos locais incorretos.
+  - **Solução**: Manter apenas a cópia em `backend/config/management/commands/wait_for_db.py` e remover as duplicatas.
+
+- ✅ **Correção do Frontend**:
+  - **Problema**: Contêiner `portfolio-frontend-dev` falhava ao iniciar com erro `ng: not found`.
+  - **Causa**: O `Dockerfile` de produção do frontend não instalava as dependências de desenvolvimento (`@angular/cli`). O volume anônimo para `node_modules` também sobrescrevia a pasta.
+  - **Solução**:
+    - Criado `frontend/Dockerfile.dev` específico para o ambiente de desenvolvimento, que executa `npm install`.
+    - Atualizado `docker-compose.override.yml` para usar o novo `Dockerfile.dev` no serviço `frontend`.
+    - Alterado o volume de `node_modules` para um volume nomeado (`frontend_node_modules`), garantindo a persistência das dependências entre as execuções.
+
+- ✅ **Documentação da Arquitetura**:
+  - Atualizado `docs/ARCHITECTURE.md` com uma seção detalhada sobre os ambientes Docker de desenvolvimento e produção, explicando os contêineres e Dockerfiles utilizados em cada um.
+
+**Resultado**: ✅ **Ambiente de desenvolvimento Docker 100% funcional** com hot-reloading para backend e frontend.
 ---
 
 ## Métricas de Sucesso

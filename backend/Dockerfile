@@ -5,6 +5,10 @@ FROM python:3.11-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# Instala dependências do sistema, como o netcat para o entrypoint.sh
+RUN apt-get update && apt-get install -y --no-install-recommends netcat-openbsd && \
+    rm -rf /var/lib/apt/lists/*
+
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
@@ -18,9 +22,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia o restante do código da aplicação para o diretório de trabalho
 COPY . .
 
+# Copia o script de entrypoint e dá permissão de execução
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 # Expõe a porta em que o Gunicorn será executado
 EXPOSE 8000
 
 # O comando para iniciar a aplicação é definido no docker-compose.yml para maior flexibilidade.
-# No entanto, um CMD padrão é uma boa prática. Verifique se 'core.wsgi:application' é o caminho correto.
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi:application"]
+# No entanto, um CMD padrão é uma boa prática.
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]
