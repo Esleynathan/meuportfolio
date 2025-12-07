@@ -1,0 +1,6 @@
+# Este arquivo instrui os robôs de busca (como o Googlebot) sobre como rastrear o site.
+
+User-agent: *
+Disallow: 
+
+Sitemap: https://esleynathan.com.br/sitemap.xml
