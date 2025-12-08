@@ -20,12 +20,13 @@ COPY requirements.txt .
 # Instala as dependências de produção
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copia o entrypoint primeiro para poder alterar suas permissões
+COPY ./entrypoint.sh /app/entrypoint.sh
+# Converte para o formato Unix e torna executável
+RUN dos2unix /app/entrypoint.sh && chmod +x /app/entrypoint.sh
+ 
 # Copia o restante do código da aplicação
-COPY . .
-
-# Converte o entrypoint.sh para o formato Unix e o torna executável
-RUN dos2unix /app/entrypoint.sh && \
-    chmod +x /app/entrypoint.sh
+COPY . /app/
 
 # Expõe a porta em que o Gunicorn será executado
 EXPOSE 8000
