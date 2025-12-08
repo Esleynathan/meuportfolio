@@ -47,7 +47,8 @@ export class TranslateService {
         }
         // Retorna o resultado apenas se for uma string, senão retorna a chave como fallback.
         return typeof result === 'string' ? result : key;
-      })
+      }),
+      distinctUntilChanged() // Emite um novo valor apenas se a tradução da chave mudar.
     );
   }
 }

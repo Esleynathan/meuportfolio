@@ -22,9 +22,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia o restante do código da aplicação para o diretório de trabalho
 COPY . .
 
-# Copia o script de entrypoint e dá permissão de execução
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+# Garante que o script de entrypoint seja executável
+RUN chmod +x /app/entrypoint.sh 
 
 # Expõe a porta em que o Gunicorn será executado
 EXPOSE 8000
