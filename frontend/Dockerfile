@@ -11,6 +11,9 @@ RUN npm install
 # Copia o restante do código-fonte.
 COPY . .
 
+# Aumenta o limite de memória para o processo Node.js para evitar erros de "heap out of memory".
+ENV NODE_OPTIONS="--max-old-space-size=1024"
+
 # Gera a build de produção. O nome 'frontend' deve corresponder ao nome do projeto em angular.json.
 RUN npm run build -- --configuration production
 
