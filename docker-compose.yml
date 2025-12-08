@@ -26,7 +26,7 @@ services:
       - SECRET_KEY=${DJANGO_SECRET_KEY:-dev-secret-key-change-this}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS:-esleynathan.com.br,www.esleynathan.com.br,localhost,backend}
     volumes:
-      - static_data:/app/staticfiles # Volume para os arquivos estáticos do Django
+      - static_data:/app/staticfiles
     depends_on:
       - db
     networks:
@@ -34,17 +34,15 @@ services:
     restart: unless-stopped
  
   nginx:
-    # A imagem do Nginx será construída a partir do nosso Dockerfile do frontend,
-    # que já contém a configuração e os arquivos estáticos.
     build:
-      context: ./frontend # O contexto é a pasta do frontend
-      dockerfile: Dockerfile # O Dockerfile multi-stage que cria o Nginx
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: portfolio-nginx
     ports:
       - "80:80"
-      - "443:443" # Para HTTPS no futuro
+      - "443:443"
     volumes:
-      - static_data:/app/staticfiles # Nginx acessa os arquivos estáticos do Django
+      - static_data:/app/staticfiles
     depends_on:
       - backend
     networks:
@@ -69,7 +67,7 @@ services:
 
 volumes:
   postgres_data:
-  static_data: # Volume para compartilhar os arquivos estáticos
+  static_data:
   frontend_node_modules:
 
 networks:

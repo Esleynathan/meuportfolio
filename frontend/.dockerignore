@@ -1,0 +1,5 @@
+# Ignora dependências do Node, que serão instaladas no contêiner.
+node_modules
+# Ignora artefatos de build do Angular.
+dist
+/npm-debug.log
