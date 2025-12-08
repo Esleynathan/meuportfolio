@@ -36,7 +36,7 @@ graph TD
 ### Backend
 - **Linguagem**: Python 3.11+
 - **Framework**: Django 5.0+, Django REST Framework
-- **Banco de Dados**: PostgreSQL (produção), SQLite (desenvolvimento)
+- **Banco de Dados**: PostgreSQL (desenvolvimento e produção)
 - **Servidor**: Gunicorn (produção)
 
 ### Frontend
@@ -72,3 +72,68 @@ Esta seção documenta as principais decisões técnicas e o porquê delas.
   - **Justificativa**: Permite que o frontend e o backend evoluam de forma independente. Facilita a criação de novos clientes (ex: um app mobile) consumindo a mesma API. Simplifica o deploy e o dimensionamento de cada parte separadamente.
 
 *Nota: As "Lições Aprendidas" no `STATUS.md` servem como um registro informal de outras decisões e aprendizados.*
+
+---
+
+## 4. Ambientes de Execução (Docker)
+
+O projeto utiliza Docker e Docker Compose para criar ambientes de desenvolvimento e produção consistentes e isolados. Essa abordagem garante que a aplicação se comporte da mesma forma no ambiente local do desenvolvedor e no servidor de produção.
+
+### 4.1. Estrutura de Arquivos
+
+-   **`docker-compose.yml`**: Arquivo base que define os serviços para o ambiente de **produção**.
+-   **`docker-compose.override.yml`**: Sobrescreve e adiciona configurações ao arquivo base para criar o ambiente de **desenvolvimento**, habilitando hot-reloading e portas de acesso direto.
+-   **`backend/Dockerfile`**: Usado para construir a imagem do backend. Ele é multi-propósito:
+    -   Em **desenvolvimento**, instala as dependências e roda o servidor de desenvolvimento do Django (`runserver`).
+    -   Em **produção**, é usado para rodar a aplicação com o servidor WSGI Gunicorn.
+-   **`frontend/Dockerfile`**: Usado para construir a imagem de **produção** do frontend. É um *multi-stage build* que primeiro compila a aplicação Angular e depois serve os arquivos estáticos resultantes com Nginx.
+-   **`frontend/Dockerfile.dev`**: Usado exclusivamente para o ambiente de **desenvolvimento** do frontend. Instala as dependências e prepara o ambiente para rodar o servidor de desenvolvimento do Angular (`ng serve`) com hot-reloading.
+
+### 4.2. Contêineres por Ambiente
+
+Tanto em desenvolvimento quanto em produção, a arquitetura é composta por **3 contêineres**, mas com propósitos e configurações distintas.
+
+#### Ambiente de Desenvolvimento (`docker-compose up`)
+
+Otimizado para produtividade e hot-reloading. O `docker-compose.override.yml` é usado para:
+1. Adicionar um serviço `frontend-dev` que roda o servidor de desenvolvimento do Angular.
+2. Sobrescrever o comando do serviço `backend` para usar o `runserver` com hot-reload.
+3. Desabilitar o serviço `nginx` de produção.
+
+1.  **`portfolio-db` (PostgreSQL)**: O banco de dados.
+2.  **`portfolio-backend` (Django `runserver`)**: Roda o servidor de desenvolvimento do Django. O código-fonte local é montado como um volume, permitindo que o servidor reinicie automaticamente a cada alteração.
+3.  **`frontend-dev` (Angular `ng serve`)**: Roda o servidor de desenvolvimento do Angular. O código-fonte local também é montado como um volume, refletindo as alterações de UI instantaneamente no navegador.
+
+```mermaid
+graph TD
+    subgraph "Máquina Local"
+        direction LR
+        Browser(Browser) <--> localhost:4200 & localhost:8000
+    end
+
+    subgraph "Docker"
+        direction LR
+        DevFrontend(frontend-dev: ng serve :4200) <--> DevBackend(backend: runserver :8000)
+        DevBackend <--> DB[(DB: Postgres :5432)]
+    end
+```
+
+#### Ambiente de Produção (`docker-compose -f docker-compose.yml up`)
+
+Otimizado para performance, segurança e escalabilidade.
+
+1.  **`portfolio-db` (PostgreSQL)**: O mesmo banco de dados.
+2.  **`portfolio-backend` (Django com Gunicorn)**: Roda a aplicação Django com Gunicorn, um servidor WSGI robusto para produção. Não há hot-reloading; ele serve a versão "congelada" da aplicação no momento do build da imagem.
+3.  **`portfolio-nginx` (Nginx)**: Atua como o ponto de entrada para o tráfego web. Ele tem duas responsabilidades:
+    -   Servir os arquivos estáticos da aplicação Angular (que foram compilados durante o build da imagem `frontend/Dockerfile`).
+    -   Atuar como **proxy reverso**, redirecionando chamadas para `/api` para o contêiner `portfolio-backend`.
+
+```mermaid
+graph TD
+    Usuario(Usuário) --> Nginx
+    subgraph "Servidor de Produção (Docker)"
+        Nginx(Nginx Proxy) --> ProdFrontend[Arquivos Estáticos do Angular]
+        Nginx --> ProdBackend(Backend: Gunicorn)
+        ProdBackend <--> DB[(DB: Postgres)]
+    end
+```

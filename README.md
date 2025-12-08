@@ -1,39 +1,46 @@
 # Portfolio Ésley Nathan
 
-> Uma aplicação web completa desenvolvida como portfólio técnico. O projeto demonstra habilidades em desenvolvimento desacoplado (Django/Angular), otimizações de performance, SEO, acessibilidade e uma arquitetura de documentação projetada para colaboração eficiente com assistentes de IA.
+> Aplicação web full-stack que serve como um portfólio técnico e uma demonstração prática de engenharia de software moderna. O projeto é totalmente containerizado e documentado seguindo uma arquitetura que otimiza a colaboração com assistentes de IA.
 
-[![Status](https://img.shields.io/badge/status-MVP_4_Concluído-brightgreen)](./docs/STATUS.md)
+[![Status](https://img.shields.io/badge/status-MVP_5_Em_Andamento-blue)](./docs/STATUS.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Este repositório contém o código-fonte do meu portfólio pessoal, um projeto full-stack que serve como uma demonstração prática de engenharia de software moderna, aplicando conceitos do meu MBA em Engenharia de Software com IA.
+O projeto está atualmente na fase de **deploy (MVP 5)**, sendo containerizado com Docker para publicação em um ambiente de nuvem.
 
 ## ✨ Principais Características
 
 - **Arquitetura Desacoplada**: Backend API-first com Django REST Framework e Frontend SPA com Angular.
 - **Containerização Completa**: Ambiente de desenvolvimento e produção 100% containerizado com Docker e Docker Compose.
 - **Design Moderno e Responsivo**: Interface construída com Tailwind CSS, focada em UX e acessibilidade.
-- **Documentação Orientada a IA**: Estrutura de documentação atômica (`STATUS`, `ARCHITECTURE`, `CONTRIBUTING`) para otimizar a colaboração com assistentes de código.
+- **Documentação Orientada a IA**: Estrutura de documentação atômica (`STATUS`, `ARCHITECTURE`, etc.) para otimizar a colaboração com assistentes de código.
 
 ## 🚀 Quick Start (Docker)
-
-### Pré-requisitos
-- Docker e Docker Compose instalados
-- Git
-
-### Rodando o projeto
+ 
+### Ambiente de Desenvolvimento (com Hot-Reload)
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/esleynathan/meuportfolio.git
+git clone https://github.com/esleynathan/portfolio-esley.git
 cd portfolio-esley
 
-# 2. Inicie os containers em modo detached
-docker-compose up -d --build
+# 2. Crie o arquivo .env a partir do exemplo
+cp .env.example .env
 
-# 3. Acesse os serviços
-Frontend: http://localhost:4200
-Backend API: http://localhost:8000/api
-Django Admin: http://localhost:8000/admin
-API Docs (Swagger): http://localhost:8000/api/docs/
+# 3. Inicie os contêineres usando o perfil "dev"
+docker-compose --profile dev up --build
+
+# 4. Acesse os serviços
+Frontend: http://localhost:4200 (com hot-reload)
+Backend API: http://localhost:8000/api (com hot-reload)
+```
+
+### Ambiente de Produção (Simulado Localmente)
+Para testar a build de produção exatamente como ela irá para a nuvem.
+```bash
+# Inicie os contêineres usando o perfil "prod"
+docker-compose --profile prod up --build
+
+# Acesse a aplicação
+Frontend (Nginx): http://localhost
 ```
 
 ### Desenvolvimento local (sem Docker)

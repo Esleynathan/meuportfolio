@@ -1,6 +1,6 @@
 # Status do Projeto - Portfolio Ésley Nathan
 
-**Última atualização**: 2024-05-22 | **Versão**: MVP 4 (Finalizado)
+**Última atualização**: 2024-05-22 | **Fase Atual**: MVP 5 (Deploy em Andamento)
 
 ---
 
@@ -8,31 +8,7 @@
 
 O projeto concluiu com sucesso o **MVP 4**, focado em otimizações de performance, acessibilidade e SEO. A base técnica do projeto foi elevada a um nível de produção, garantindo uma experiência de usuário de alta qualidade e boa visibilidade para motores de busca.
 
-### O que foi concluído (MVP 3):
-
-#### Fase 3A - Conteúdo Real ✅
-- ✅ Projetos e Skills reais adicionados via Django Admin.
-- ✅ Textos e links pessoais atualizados.
-
-#### Fase 3B - UX/Design Moderno ✅
-- ✅ Interface redesenhada com animações, cards modernos e layout aprimorado.
-- ✅ Integração completa entre backend e frontend finalizada.
-
-### O que foi concluído (MVP 4):
-
-#### Fase 4.1 - Performance ✅
-- ✅ Lazy Loading de imagens implementado.
-- ✅ Análise e verificação do tamanho do bundle.
-
-#### Fase 4.2 - Acessibilidade (A11y) ✅
-- ✅ Atributos `alt` e `aria-label` revisados e aplicados.
-- ✅ Navegação por teclado testada e corrigida.
-- ✅ Relação de contraste de cores ajustada.
-
-#### Fase 4.3 - SEO ✅
-- ✅ Meta tags dinâmicas (título e descrição) implementadas.
-- ✅ Dados estruturados (Schema.org) adicionados.
-- ✅ Arquivos `robots.txt` e `sitemap.xml` criados.
+A aplicação está agora na fase final de **deploy (MVP 5)**, sendo preparada para ser publicada online.
 
 ---
 
@@ -40,82 +16,43 @@ O projeto concluiu com sucesso o **MVP 4**, focado em otimizações de performan
 
 | Métrica | Status |
 |---------|--------|
-| Backend API | ✅ 100% |
-| Frontend UI | ✅ 100% |
-| Integração | ✅ 100% |
-| UX/Design Moderno | ✅ 100% |
-| Dados Reais | ✅ 100% |
-| Responsividade | ✅ 100% |
-| Animações/Interações | ✅ 100% |
-| Documentação | ✅ 100% (README, STATUS, ROADMAP, API, UX-DESIGN-MVP3, MVP4_PLANNING) |
+| Desenvolvimento (MVP 1-4) | ✅ 100% Concluído |
+| Documentação | ✅ Completa e Atualizada |
+| Deploy (MVP 5) | ⏳ Em Andamento |
 
 ---
 
-## 🚀 Próximos Passos (MVP 5 - Deploy)
+## 🚀 Próximos Passos: MVP 5 - Deploy
 
-**Objetivo**: Publicar a aplicação online em um ambiente de produção robusto e seguro.
+**Objetivo**: Publicar a aplicação online em um ambiente de produção robusto, seguro e automatizado.
+O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
 
-1.  **Dockerização Completa** ⏳
-2.  **Deploy em Ambiente de Nuvem (VM)** ⏳
-3.  **Configuração de Domínio e DNS** ⏳
-4.  **Configuração de SSL/HTTPS com Let's Encrypt** ⏳
-
----
-
-## 📈 Roadmap Completo
-
-### ✅ MVP 1 - Landing Page Visual (COMPLETO)
-- Backend API funcional
-- Frontend responsivo
-- 7 componentes criados
-- Design com Tailwind CSS
-
-### ✅ MVP 2 - Integração Backend ↔ Frontend (COMPLETO)
-- Services Angular criados
-- Conexão com API funcionando
-- Formulário funcional com validação
-- Dados dinâmicos carregando
-- Tratamento de paginação DRF
-
-### ⏳ MVP 3 - Conteúdo Real + UX/Design Moderno (EM ANDAMENTO)
-- **Fase 3A - Conteúdo Real** ✅ (COMPLETO):
-  - [x] Adicionar projetos reais via Django Admin
-  - [x] Adicionar skills reais via Django Admin
-  - [x] Customizar textos About
-  - [x] Adicionar foto profissional
-  - [x] Links GitHub/LinkedIn funcionais
-
-- **Fase 3B - Refinamento UX/Design**:
-  - [x] `style(hero)`: Refinar Hero Section (gradiente no nome, animação, link WhatsApp).
-  - [x] `style(footer)`: Modernizar Rodapé (layout limpo, responsivo e centralizado).
-  - [x] `style(back-to-top)`: Refinar Botão "Voltar ao Topo" (opacidade e hover).
-  - [x] `style(contact)`: Ajustar largura do formulário para melhor legibilidade.
-  - [x] `feat(navbar)`: Implementar Navbar Inteligente com Headroom.js.
-  - [x] `style(skills)`: Refinar seção de Skills (agrupamento, ordenação e barras de proficiência).
-  - [x] `feat(theme)`: Implementar Dark Mode.
-  - [x] `fix(layout)`: Corrigir Cores de Fundo das Seções para melhor diferenciação.
-
-### ✅ MVP 4 - Polimento e Otimização (COMPLETO)
-- **Fase 4.1 - Performance**:
-  - [x] `feat(perf)`: Implementar Lazy Loading de imagens para melhorar o LCP.
-  - [x] `chore(perf)`: Analisar tamanho do bundle com webpack-bundle-analyzer.
-  - [x] `chore(perf)`: Verificar minificação de assets na build de produção.
-- **Fase 4.2 - Acessibilidade (A11y)**:
-  - [x] `fix(a11y)`: Garantir `alt` text em todas as imagens e `aria-hidden` em ícones decorativos.
-  - [x] `feat(a11y)`: Adicionar `aria-label` descritivos em links e botões com ícones.
-  - [x] `fix(a11y)`: Corrigir navegação por teclado (foco em elementos ocultos).
-  - [x] `fix(a11y)`: Ajustar contraste de cores para conformidade com WCAG AA.
-- **Fase 4.3 - SEO**:
-  - [x] `feat(seo)`: Implementar meta tags dinâmicas (título e descrição) com `TranslateService`.
-  - [x] `feat(seo)`: Adicionar dados estruturados (Schema.org) no formato JSON-LD.
-  - [x] `feat(seo)`: Criar arquivo `robots.txt` para guiar os robôs de busca.
-  - [x] `feat(seo)`: Criar arquivo `sitemap.xml` para facilitar a indexação.
-
-### 📅 MVP 5 - Deploy
-- Dockerização completa
-- Deploy em VM
-- Domínio configurado
-- SSL/HTTPS
+- **Fase 0: Padronização de Ambiente** ✅
+  - [x] `refactor(db)`: Substituir SQLite por PostgreSQL no ambiente de desenvolvimento para garantir paridade com a produção.
+- **Fase 1: Dockerização do Ambiente de Desenvolvimento** ✅ **(Concluído)**
+  - [x] Criar `docker-compose.override.yml` para desenvolvimento com hot-reloading.
+  - [x] Atualizar `README.md` com instruções para rodar o ambiente de dev.
+  - [x] Testar e confirmar o funcionamento do hot-reloading (backend e frontend).
+- **Fase 2: Dockerização do Ambiente de Produção** ✅ **(Concluído)**
+  - [x] Criar `backend/Dockerfile` para build de produção com Gunicorn.
+  - [x] Criar `frontend/Dockerfile` (multi-stage) para build Angular e servir com Nginx.
+  - [x] Criar `frontend/nginx.conf` com regras de reverse proxy.
+  - [x] Criar `.env.example` e garantir que `.env` está no `.gitignore`.
+- **Fase 3: Simulação do Ambiente de Produção Localmente** ⏳ **(Em Andamento)**
+  - [x] Preparar ambiente de produção para servir arquivos estáticos do Django (`collectstatic`).
+  - [x] Executar `docker-compose --profile prod up --build` para iniciar a stack de produção.
+  - [x] Validar acesso via `http://localhost` (Frontend) e `http://localhost/admin/` (Backend).
+  - [ ] (Opcional) Validar exposição externa via DNS dinâmico e port forwarding.
+- **Fase 4: Deploy em Nuvem** ⏳
+  - [ ] Provisionar uma VM (Droplet/EC2) com Ubuntu.
+  - [ ] Instalar Docker e Docker Compose na VM.
+  - [ ] Clonar o repositório do projeto na VM.
+  - [ ] Criar o arquivo `.env` de produção na VM com as credenciais seguras.
+  - [ ] Executar `docker-compose --profile prod up -d` para iniciar a aplicação.
+- **Fase 5: Configuração Final e Go-Live** ⏳
+  - [ ] Configurar o registro DNS do domínio para apontar para o IP da VM.
+  - [ ] Configurar SSL/HTTPS (Let's Encrypt com Certbot).
+  - [ ] Validar o acesso via `https://esleynathan.com.br` e realizar testes finais.
 
 ---
 
@@ -125,8 +62,7 @@ O projeto concluiu com sucesso o **MVP 4**, focado em otimizações de performan
 - Python 3.11+
 - Django 5.0+
 - Django REST Framework
-- SQLite (desenvolvimento)
-- PostgreSQL (futuro)
+- PostgreSQL (desenvolvimento e produção)
 
 ### Frontend
 - Angular 17

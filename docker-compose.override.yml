@@ -1,0 +1,18 @@
+services:
+  db:
+    ports:
+      # Expõe a porta do banco de dados para a máquina host para fins de desenvolvimento
+      - "5432:5432"
+
+  backend:
+    # Sobrescreve o comando de produção
+    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      # Habilita o modo de depuração para desenvolvimento
+      - DEBUG=True
+    volumes:
+      # Monta o código-fonte local no contêiner para hot-reloading
+      - ./backend:/app
+    ports:
+      # Expõe a porta do backend para a máquina host
+      - "8000:8000"

@@ -1,87 +1,76 @@
-version: '3.8'
-
 services:
-  # PostgreSQL Database
   db:
     image: postgres:15-alpine
     container_name: portfolio-db
     environment:
-      POSTGRES_DB: portfolio_db
-      POSTGRES_USER: portfolio_user
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-dev_password_change_in_production}
+      - POSTGRES_DB=${DB_NAME:-portfolio_db}
+      - POSTGRES_USER=${DB_USER:-portfolio_user}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-dev_password}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     networks:
       - portfolio-network
     restart: unless-stopped
 
-  # Django Backend API
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: portfolio-backend
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - ./backend:/app
-      - static_volume:/app/staticfiles
-      - media_volume:/app/media
-    ports:
-      - "8000:8000"
+    # O entrypoint executa as migrações e depois o comando passado
+    entrypoint: /app/entrypoint.sh
+    command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application
     environment:
-      - DEBUG=True
-      - DATABASE_URL=postgresql://portfolio_user:${DB_PASSWORD:-dev_password_change_in_production}@db:5432/portfolio_db
+      - DEBUG=False
+      - DATABASE_URL=postgresql://${DB_USER:-portfolio_user}:${DB_PASSWORD:-dev_password}@db:5432/${DB_NAME:-portfolio_db}
       - SECRET_KEY=${DJANGO_SECRET_KEY:-dev-secret-key-change-this}
-      - ALLOWED_HOSTS=localhost,127.0.0.1,backend
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-esleynathan.com.br,www.esleynathan.com.br,localhost,backend}
+    volumes:
+      - static_data:/app/staticfiles # Volume para os arquivos estáticos do Django
     depends_on:
       - db
     networks:
       - portfolio-network
     restart: unless-stopped
-
-  # Angular Frontend
-  frontend:
+ 
+  nginx:
+    # A imagem do Nginx será construída a partir do nosso Dockerfile do frontend,
+    # que já contém a configuração e os arquivos estáticos.
     build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: portfolio-frontend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      context: ./frontend # O contexto é a pasta do frontend
+      dockerfile: Dockerfile # O Dockerfile multi-stage que cria o Nginx
+    container_name: portfolio-nginx
     ports:
-      - "4200:4200"
-    environment:
-      - API_URL=http://localhost:8000/api
+      - "80:80"
+      - "443:443" # Para HTTPS no futuro
+    volumes:
+      - static_data:/app/staticfiles # Nginx acessa os arquivos estáticos do Django
     depends_on:
       - backend
     networks:
       - portfolio-network
+    profiles: ["prod"]
     restart: unless-stopped
 
-  # Nginx Reverse Proxy (Opcional - para produção)
-  # nginx:
-  #   image: nginx:alpine
-  #   container_name: portfolio-nginx
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-  #     - static_volume:/usr/share/nginx/html/static
-  #     - media_volume:/usr/share/nginx/html/media
-  #   depends_on:
-  #     - backend
-  #     - frontend
-  #   networks:
-  #     - portfolio-network
-  #   restart: unless-stopped
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: portfolio-frontend-dev
+    command: npm start -- --host 0.0.0.0
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    ports:
+      - "4200:4200"
+    networks:
+      - portfolio-network
+    profiles: ["dev"]
 
 volumes:
   postgres_data:
-  static_volume:
-  media_volume:
+  static_data: # Volume para compartilhar os arquivos estáticos
+  frontend_node_modules:
 
 networks:
   portfolio-network:
