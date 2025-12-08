@@ -17,8 +17,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: portfolio-backend
-    # O entrypoint executa as migrações e depois o comando passado
-    entrypoint: /app/entrypoint.sh
+    # Garante a permissão de execução e depois chama o script. O comando final é passado como argumento.
+    entrypoint: /bin/sh -c "chmod +x /app/entrypoint.sh && /app/entrypoint.sh \"$$@\""
     command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application
     environment:
       - DEBUG=False
