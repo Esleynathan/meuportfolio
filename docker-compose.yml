@@ -17,8 +17,8 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: portfolio-backend
-    # Garante a permissão de execução, chama o script de entrypoint e, em seguida, inicia o gunicorn.
-    command: sh -c "chmod +x /app/entrypoint.sh && /app/entrypoint.sh && gunicorn --bind 0.0.0.0:8000 config.wsgi:application"
+    entrypoint: /app/entrypoint.sh
+    command: gunicorn --bind 0.0.0.0:8000 config.wsgi:application
     environment:
       - DEBUG=False
       - DATABASE_URL=postgresql://${DB_USER:-portfolio_user}:${DB_PASSWORD:-dev_password}@db:5432/${DB_NAME:-portfolio_db}
