@@ -4,7 +4,7 @@ from .views import ContactViewSet
 
 # Router do DRF que gera automaticamente as URLs
 router = DefaultRouter()
-router.register(r'', ContactViewSet, basename='contact')
+router.register(r'contacts', ContactViewSet, basename='contact')
 
 urlpatterns = [
     path('', include(router.urls)),
