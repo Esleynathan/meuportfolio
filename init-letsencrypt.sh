@@ -46,32 +46,40 @@ if [ ! -e "$DATA_PATH/conf/options-ssl-nginx.conf" ] || [ ! -e "$DATA_PATH/conf/
     echo
 fi
 
-# Cria certificados dummy para permitir que o Nginx inicie
-echo -e "${YELLOW}Criando certificados dummy para ${DOMAINS[0]}...${NC}"
-PATH_CERT="$DATA_PATH/conf/live/${DOMAINS[0]}"
-mkdir -p "$PATH_CERT"
-docker-compose --profile prod run --rm --entrypoint "\
-    openssl req -x509 -nodes -newkey rsa:$RSA_KEY_SIZE -days 1 \
-    -keyout '/etc/letsencrypt/live/${DOMAINS[0]}/privkey.pem' \
-    -out '/etc/letsencrypt/live/${DOMAINS[0]}/fullchain.pem' \
-    -subj '/CN=localhost'" certbot
+# Usa configuração HTTP-only temporária para obtenção inicial de certificados
+echo -e "${YELLOW}Configurando Nginx em modo HTTP-only para obtenção de certificados...${NC}"
+if [ ! -f "frontend/nginx.conf.backup" ]; then
+    cp frontend/nginx.conf frontend/nginx.conf.backup
+    echo -e "${GREEN}Backup da configuração SSL criado em nginx.conf.backup${NC}"
+fi
+cp frontend/nginx.init.conf frontend/nginx.conf
 echo
 
-# Inicia o Nginx com certificados dummy
-echo -e "${YELLOW}Iniciando Nginx...${NC}"
-docker-compose --profile prod up --force-recreate -d nginx
+# Para containers existentes
+echo -e "${YELLOW}Parando containers existentes...${NC}"
+docker compose --profile prod down
+echo
+
+# Reconstrói e inicia o Nginx com configuração HTTP-only
+echo -e "${YELLOW}Reconstruindo Nginx com configuração HTTP-only...${NC}"
+docker compose --profile prod build --no-cache nginx
+echo
+
+echo -e "${YELLOW}Iniciando Nginx em modo HTTP-only...${NC}"
+docker compose --profile prod up -d nginx
 echo
 
 # Aguarda Nginx estar pronto
 echo -e "${YELLOW}Aguardando Nginx iniciar...${NC}"
 sleep 5
 
-# Deleta certificados dummy
-echo -e "${YELLOW}Deletando certificados dummy...${NC}"
-docker-compose --profile prod run --rm --entrypoint "\
-    rm -rf /etc/letsencrypt/live/${DOMAINS[0]} && \
-    rm -rf /etc/letsencrypt/archive/${DOMAINS[0]} && \
-    rm -rf /etc/letsencrypt/renewal/${DOMAINS[0]}.conf" certbot
+# Verifica se Nginx está rodando
+if ! docker compose --profile prod ps nginx | grep -q "Up"; then
+    echo -e "${RED}Erro: Nginx não iniciou corretamente!${NC}"
+    docker compose --profile prod logs nginx
+    exit 1
+fi
+echo -e "${GREEN}Nginx rodando em modo HTTP-only${NC}"
 echo
 
 # Solicita certificado real do Let's Encrypt
@@ -106,15 +114,44 @@ echo
 # Verifica se o certificado foi obtido com sucesso
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}Certificado SSL obtido com sucesso!${NC}"
+    echo
 
-    # Recarrega o Nginx para usar o certificado real
-    echo -e "${YELLOW}Recarregando Nginx...${NC}"
-    docker-compose --profile prod exec nginx nginx -s reload
+    # Restaura configuração SSL completa
+    echo -e "${YELLOW}Restaurando configuração Nginx com suporte SSL...${NC}"
+    cp frontend/nginx.conf.backup frontend/nginx.conf
+    echo
 
-    echo -e "\n${GREEN}=== Configuração SSL concluída com sucesso! ===${NC}"
-    echo -e "${GREEN}Seu site está disponível em https://${DOMAINS[0]}${NC}\n"
+    # Reconstrói Nginx com configuração SSL
+    echo -e "${YELLOW}Reconstruindo Nginx com configuração SSL...${NC}"
+    docker compose --profile prod build --no-cache nginx
+    echo
+
+    # Reinicia Nginx com a configuração SSL
+    echo -e "${YELLOW}Reiniciando Nginx com SSL habilitado...${NC}"
+    docker compose --profile prod up -d --force-recreate nginx
+    echo
+
+    # Aguarda Nginx reiniciar
+    sleep 5
+
+    # Verifica se Nginx está rodando com SSL
+    if docker compose --profile prod ps nginx | grep -q "Up"; then
+        echo -e "${GREEN}Nginx rodando com SSL habilitado!${NC}"
+        echo -e "\n${GREEN}=== Configuração SSL concluída com sucesso! ===${NC}"
+        echo -e "${GREEN}Seu site está disponível em:${NC}"
+        echo -e "${GREEN}  - https://${DOMAINS[0]}${NC}"
+        echo -e "${GREEN}  - https://www.${DOMAINS[0]} (redireciona para versão sem www)${NC}\n"
+    else
+        echo -e "${RED}Erro: Nginx não iniciou com SSL!${NC}"
+        docker compose --profile prod logs nginx
+        exit 1
+    fi
 else
     echo -e "${RED}Erro ao obter certificado SSL!${NC}"
     echo -e "${YELLOW}Verifique os logs acima para detalhes.${NC}"
+    echo -e "${YELLOW}Restaurando configuração original...${NC}"
+    if [ -f "frontend/nginx.conf.backup" ]; then
+        cp frontend/nginx.conf.backup frontend/nginx.conf
+    fi
     exit 1
 fi
