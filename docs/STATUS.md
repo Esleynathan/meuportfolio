@@ -203,7 +203,7 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
 
 ## 📞 Contato do Desenvolvedor
 
-- **LinkedIn**: [linkedin.com/in/esleynathan](https://linkedin.com/in/esleynathan)
+- **LinkedIn**: [linkedin.com/in/esleynathan](https://www.linkedin.com/in/esleybarbosa/)
 - **GitHub**: [github.com/esleynathan](https://github.com/esleynathan)
 
 ---

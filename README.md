@@ -85,7 +85,7 @@ A API backend está totalmente funcional e documentada com Swagger/OpenAPI.
 
 ## Contato
 
-- **LinkedIn**: [linkedin.com/in/esleynathan](https://linkedin.com/in/esleynathan)
+- **LinkedIn**: [linkedin.com/in/esleynathan](https://www.linkedin.com/in/esleybarbosa/)
 - **GitHub**: [github.com/esleynathan](https://github.com/esleynathan)
 
 ## Licença
