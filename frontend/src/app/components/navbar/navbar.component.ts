@@ -31,9 +31,18 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     const savedTheme = localStorage.getItem('theme');
     this.isScrolled = window.scrollY > 10;
 
-    if (savedTheme === 'dark') {
+    // Define dark mode como padrão se não houver preferência salva
+    if (savedTheme === 'light') {
+      this.isDarkMode = false;
+      document.documentElement.classList.remove('dark');
+    } else {
+      // Dark mode por padrão (quando não há preferência ou quando é 'dark')
       this.isDarkMode = true;
       document.documentElement.classList.add('dark');
+      // Salva a preferência padrão se ainda não existir
+      if (!savedTheme) {
+        localStorage.setItem('theme', 'dark');
+      }
     }
 
     // Sincroniza o idioma do navbar com o service
