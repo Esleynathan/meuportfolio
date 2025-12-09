@@ -1,5 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAdminUser
 from .models import Contact
 from .serializers import ContactSerializer
 
@@ -14,9 +15,23 @@ class ContactViewSet(viewsets.ModelViewSet):
     - GET  /api/contacts/{id}/ → Detalhes de uma mensagem
     """
 
-    queryset = Contact.objects.all()
+    queryset = Contact.objects.all().order_by('-created_at')
     serializer_class = ContactSerializer
     http_method_names = ['get', 'post', 'head', 'options']  # Desabilita PUT, PATCH, DELETE via API
+
+    def get_permissions(self):
+        """
+        Define permissões diferentes por ação.
+        - Ação de criação ('create') é pública para receber mensagens.
+        - Outras ações ('list', 'retrieve') exigem login de admin para ler as mensagens.
+        """
+        if self.action == 'create':
+            # Qualquer um pode enviar uma mensagem
+            permission_classes = [AllowAny]
+        else:
+            # Apenas administradores podem listar ou ver as mensagens
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
 
     def create(self, request, *args, **kwargs):
         """

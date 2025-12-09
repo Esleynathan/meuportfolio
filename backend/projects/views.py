@@ -1,5 +1,6 @@
 from rest_framework import viewsets, filters
 from rest_framework.decorators import action
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from .models import Project
 from .serializers import ProjectSerializer
@@ -24,6 +25,18 @@ class ProjectViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'description', 'technologies']
     ordering_fields = ['order', 'created_at']
     ordering = ['order', '-created_at']  # Ordenação padrão
+
+    def get_permissions(self):
+        """
+        Define permissões diferentes por ação.
+        - Ações de leitura ('list', 'retrieve', 'featured') são públicas.
+        - Outras ações ('create', 'update', 'destroy') exigem login de admin.
+        """
+        if self.action in ['list', 'retrieve', 'featured']:
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAdminUser]
+        return [permission() for permission in permission_classes]
 
     @action(detail=False, methods=['get'])
     def featured(self, request):
