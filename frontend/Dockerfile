@@ -26,4 +26,6 @@ FROM nginx:1.25-alpine
 COPY --from=build /app/dist/frontend/ /usr/share/nginx/html
 
 # Copia a configuração customizada do Nginx.
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# IMPORTANTE: Usar nginx-http-only.conf primeiro para obter certificados SSL
+# Depois trocar para nginx.conf quando os certificados existirem
+COPY nginx-http-only.conf /etc/nginx/conf.d/default.conf
