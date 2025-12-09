@@ -1,14 +1,22 @@
 # Status do Projeto - Portfolio Ésley Nathan
 
-**Última atualização**: 2025-12-08 | **Fase Atual**: MVP 5 (Configuração Final)
+**Última atualização**: 2025-12-09 | **Fase Atual**: MVP 5 - DEPLOY CONCLUÍDO ✅
 
 ---
 
-## 🎯 Status Atual: MVP 4 - OTIMIZAÇÃO E POLIMENTO CONCLUÍDO ✅
+## 🎯 Status Atual: MVP 5 - DEPLOY CONCLUÍDO ✅
 
-O projeto concluiu com sucesso o **MVP 4**, focado em otimizações de performance, acessibilidade e SEO. A base técnica do projeto foi elevada a um nível de produção, garantindo uma experiência de usuário de alta qualidade e boa visibilidade para motores de busca.
+O projeto foi **publicado com sucesso em produção**! A aplicação está rodando em ambiente de produção na nuvem (DigitalOcean) com SSL/HTTPS configurado via Let's Encrypt.
 
-A aplicação está agora na fase final de **deploy (MVP 5)**, sendo preparada para ser publicada online.
+🌐 **Site Online:** https://esleynathan.com.br
+
+Todas as funcionalidades estão operacionais:
+- ✅ Frontend Angular servido via Nginx com SSL
+- ✅ Backend Django REST API rodando
+- ✅ PostgreSQL como banco de dados
+- ✅ Certificados SSL válidos (renováveis automaticamente)
+- ✅ Redirecionamento automático HTTP → HTTPS
+- ✅ Arquivos estáticos otimizados
 
 ---
 
@@ -18,7 +26,8 @@ A aplicação está agora na fase final de **deploy (MVP 5)**, sendo preparada p
 |---------|--------|
 | Desenvolvimento (MVP 1-4) | ✅ 100% Concluído |
 | Documentação | ✅ Completa e Atualizada |
-| Deploy (MVP 5) | ⏳ Em Andamento |
+| Deploy (MVP 5) | ✅ 100% Concluído |
+| Site em Produção | 🌐 Online com SSL |
 
 ---
 
@@ -49,21 +58,23 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
   - [x] Clonar o repositório do projeto na VM.
   - [x] Criar o arquivo `.env` de produção na VM com as credenciais seguras.
   - [x] Executar `docker-compose --profile prod up -d` para iniciar a aplicação.
-- **Fase 5: Configuração Final e Go-Live** 📅 **(Planejado)**
+- **Fase 5: Configuração Final e Go-Live** ✅ **(Concluído)**
   - [x] **Configuração de DNS:**
     - [x] Criar um registro `A` para `esleynathan.com.br` apontando para o IP da VM.
     - [x] Criar um registro `A` (ou `CNAME`) para `www.esleynathan.com.br`.
-  - [ ] **Configuração de SSL/HTTPS com Let's Encrypt:**
-    - [ ] **1. Adicionar Serviço Certbot:** Incluir um novo serviço `certbot` no `docker-compose.yml` para gerenciar os certificados.
-    - [ ] **2. Compartilhar Volumes:** Configurar volumes para que o Nginx possa acessar os certificados gerados pelo Certbot (`certbot-conf` e `certbot-www`).
-    - [ ] **3. Atualizar Configuração do Nginx:** Modificar `nginx.conf` para:
+  - [x] **Configuração de SSL/HTTPS com Let's Encrypt:**
+    - [x] **1. Adicionar Serviço Certbot:** Incluído serviço `certbot` no `docker-compose.yml` para gerenciar os certificados.
+    - [x] **2. Compartilhar Volumes:** Configurados volumes `certbot-conf` e `certbot-www` para compartilhamento entre Nginx e Certbot.
+    - [x] **3. Atualizar Configuração do Nginx:** Modificado `nginx.conf` para:
       - Servir o desafio HTTP-01 do Let's Encrypt na rota `/.well-known/acme-challenge/`.
       - Ouvir na porta 443 (SSL) e apontar para os caminhos dos certificados.
       - Redirecionar todo o tráfego da porta 80 (HTTP) para 443 (HTTPS).
-    - [ ] **4. Criar Script de Inicialização (`init-letsencrypt.sh`):** Automatizar o processo inicial de obtenção de certificados para evitar o problema "ovo e galinha" (Nginx precisa dos certificados para iniciar, mas o Certbot precisa do Nginx rodando para gerá-los).
-    - [ ] **5. Configurar Renovação Automática:** Adicionar um comando ou cron job para executar a renovação dos certificados periodicamente.
-  - [ ] **Go-Live:**
-    - [ ] Validar o acesso via `https://esleynathan.com.br` e realizar testes finais de ponta a ponta.
+    - [x] **4. Solução do Problema "Ovo e Galinha":** Criada configuração temporária `nginx-http-only.conf` para servir apenas HTTP durante aquisição de certificados, depois migrado para `nginx.conf` com SSL.
+    - [x] **5. Configurar Renovação Automática:** Container certbot configurado com loop de renovação a cada 12 horas (`certbot renew`).
+  - [x] **Go-Live:**
+    - [x] Site validado e acessível via `https://esleynathan.com.br` com certificado SSL válido.
+    - [x] Redirecionamento HTTP → HTTPS funcionando.
+    - [x] Testes de ponta a ponta realizados com sucesso.
 
 ---
 
@@ -81,11 +92,11 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
 - Tailwind CSS 3
 - RxJS
 
-### DevOps (Futuro)
-- Docker
-- Docker Compose
-- Nginx (reverse proxy)
-- VM Linux
+### DevOps
+- Docker & Docker Compose
+- Nginx (reverse proxy e SSL)
+- Let's Encrypt / Certbot (SSL/TLS)
+- DigitalOcean (VM Ubuntu)
 
 ---
 
@@ -165,14 +176,27 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
    - Efeitos de escala e sombra criam profundidade
    - @HostListener para scroll tracking é eficiente
 
+10. **Deploy e SSL/HTTPS: Problema "Ovo e Galinha" resolvido**
+   - Certbot com entrypoint customizado (`certbot renew`) não funcionava para criação inicial
+   - Solução: `docker compose run --rm --entrypoint certbot` sobrescreve o entrypoint
+   - Configuração temporária HTTP-only durante aquisição de certificados
+   - Depois do SSL gerado, migrar para configuração HTTPS completa
+   - Renovação automática funciona via container certbot com loop de 12h
+
 ---
 
 ## 🔗 Links Úteis
 
+### Produção
+- **Site Online**: https://esleynathan.com.br
+- **API Backend**: https://esleynathan.com.br/api/
+- **Django Admin**: https://esleynathan.com.br/admin/
+
+### Desenvolvimento Local
+- **Frontend Dev**: http://localhost:4200/
 - **Backend API**: http://localhost:8000/api/
 - **Swagger Docs**: http://localhost:8000/api/docs/
 - **Django Admin**: http://localhost:8000/admin/
-- **Frontend**: http://localhost:4200/
 
 ---
 
