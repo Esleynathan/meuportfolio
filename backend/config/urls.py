@@ -8,13 +8,13 @@ from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
-    # Django Admin
-    path('admin/', admin.site.urls),
+    # A URL do admin foi alterada de 'admin/' para 'x/' por segurança.
+    path('x/', admin.site.urls),
 
     # API Endpoints
-    path('api/projects/', include('projects.urls')),
-    path('api/skills/', include('skills.urls')),
-    path('api/contacts/', include('contacts.urls')),
+    path('api/', include('projects.urls')),
+    path('api/', include('skills.urls')),
+    path('api/', include('contacts.urls')),
 
     # API Documentation (Swagger)
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
