@@ -560,6 +560,26 @@ Cada projeto será dockerizado e integrado à landing page.
 **Resultado**: ✅ **Ambiente de produção pronto para ser testado**, com o Nginx configurado para servir tanto a aplicação Angular quanto os arquivos estáticos do Django Admin.
 ---
 
+### Sessão 11 (2025-12-09) - MVP 5 Fase 3 - Fortalecimento de Segurança (Hardening)
+**Objetivo**: Proteger a aplicação contra acessos não autorizados e ataques automatizados.
+
+**Entregas**:
+- ✅ **Proteção da API (Endpoints de Escrita)**:
+  - **Problema**: Endpoints de `POST`, `PUT`, `DELETE` estavam abertos, permitindo que qualquer um modificasse os dados.
+  - **Solução**: Implementado `permission_classes` em todas as `ViewSets` (`Project`, `Skill`, `Contact`).
+    - Ações de leitura (`GET`) permanecem públicas.
+    - Ações de escrita (`POST`, `PUT`, `DELETE`) agora exigem autenticação de administrador (`IsAdminUser`).
+    - A `ContactViewSet` permite `POST` público, mas a leitura (`GET`) é restrita a administradores.
+
+- ✅ **Proteção do Django Admin**:
+  - **Problema**: A URL `/admin/` é um alvo comum para ataques de força bruta.
+  - **Solução**: A URL do admin foi alterada para um caminho não-padrão (`/x/`).
+    - Atualizado `backend/config/urls.py` para registrar a nova rota.
+    - Atualizado `frontend/nginx.conf` para criar o proxy reverso para a nova rota.
+
+**Resultado**: ✅ **Aplicação significativamente mais segura**. Acesso de escrita à API e ao painel administrativo agora estão devidamente restritos a usuários autorizados.
+---
+
 ## Métricas de Sucesso
 
 | Métrica | Status | Observação |

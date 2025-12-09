@@ -1,7 +1,7 @@
 # API Documentation - Portfolio Backend
 
 **Base URL**: `http://localhost:8000/api`
-**Django Admin**: `http://localhost:8000/admin`
+**Django Admin**: `http://localhost:8000/x/`
 **Interactive Docs (Swagger)**: `http://localhost:8000/api/docs/`
 **OpenAPI Schema**: `http://localhost:8000/api/schema/`
 

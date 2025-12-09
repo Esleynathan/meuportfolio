@@ -17,6 +17,7 @@ Todas as funcionalidades estão operacionais:
 - ✅ Certificados SSL válidos (renováveis automaticamente)
 - ✅ Redirecionamento automático HTTP → HTTPS
 - ✅ Arquivos estáticos otimizados
+- ✅ Endpoints de API e Admin protegidos contra acesso não autorizado
 
 ---
 
@@ -190,13 +191,13 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
 ### Produção
 - **Site Online**: https://esleynathan.com.br
 - **API Backend**: https://esleynathan.com.br/api/
-- **Django Admin**: https://esleynathan.com.br/admin/
+- **Django Admin**: https://esleynathan.com.br/x/
 
 ### Desenvolvimento Local
 - **Frontend Dev**: http://localhost:4200/
 - **Backend API**: http://localhost:8000/api/
 - **Swagger Docs**: http://localhost:8000/api/docs/
-- **Django Admin**: http://localhost:8000/admin/
+- **Django Admin**: http://localhost:8000/x/
 
 ---
 
