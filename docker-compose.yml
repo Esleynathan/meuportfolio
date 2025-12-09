@@ -42,8 +42,24 @@ services:
       - "443:443"
     volumes:
       - static_data:/app/staticfiles
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
     depends_on:
       - backend
+    networks:
+      - portfolio-network
+    profiles: ["prod"]
+    restart: unless-stopped
+
+  certbot:
+    image: certbot/certbot:latest
+    container_name: portfolio-certbot
+    volumes:
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      - nginx
     networks:
       - portfolio-network
     profiles: ["prod"]
@@ -68,6 +84,8 @@ volumes:
   postgres_data:
   static_data:
   frontend_node_modules:
+  certbot-conf:
+  certbot-www:
 
 networks:
   portfolio-network:

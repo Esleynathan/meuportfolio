@@ -1,6 +1,6 @@
 # Status do Projeto - Portfolio Ésley Nathan
 
-**Última atualização**: 2024-05-22 | **Fase Atual**: MVP 5 (Deploy em Andamento)
+**Última atualização**: 2025-12-08 | **Fase Atual**: MVP 5 (Configuração Final)
 
 ---
 
@@ -43,16 +43,27 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
   - [x] Executar `docker-compose --profile prod up --build` para iniciar a stack de produção.
   - [x] Validar acesso via `http://localhost` (Frontend) e `http://localhost/admin/` (Backend).
   - [ ] (Opcional) Validar exposição externa via DNS dinâmico e port forwarding.
-- **Fase 4: Deploy em Nuvem** ⏳
-  - [ ] Provisionar uma VM (Droplet/EC2) com Ubuntu.
-  - [ ] Instalar Docker e Docker Compose na VM.
-  - [ ] Clonar o repositório do projeto na VM.
-  - [ ] Criar o arquivo `.env` de produção na VM com as credenciais seguras.
-  - [ ] Executar `docker-compose --profile prod up -d` para iniciar a aplicação.
-- **Fase 5: Configuração Final e Go-Live** ⏳
-  - [ ] Configurar o registro DNS do domínio para apontar para o IP da VM.
-  - [ ] Configurar SSL/HTTPS (Let's Encrypt com Certbot).
-  - [ ] Validar o acesso via `https://esleynathan.com.br` e realizar testes finais.
+- **Fase 4: Deploy em Nuvem** ✅
+  - [x] Provisionar uma VM (Droplet/EC2) com Ubuntu.
+  - [x] Instalar Docker e Docker Compose na VM.
+  - [x] Clonar o repositório do projeto na VM.
+  - [x] Criar o arquivo `.env` de produção na VM com as credenciais seguras.
+  - [x] Executar `docker-compose --profile prod up -d` para iniciar a aplicação.
+- **Fase 5: Configuração Final e Go-Live** 📅 **(Planejado)**
+  - [x] **Configuração de DNS:**
+    - [x] Criar um registro `A` para `esleynathan.com.br` apontando para o IP da VM.
+    - [x] Criar um registro `A` (ou `CNAME`) para `www.esleynathan.com.br`.
+  - [ ] **Configuração de SSL/HTTPS com Let's Encrypt:**
+    - [ ] **1. Adicionar Serviço Certbot:** Incluir um novo serviço `certbot` no `docker-compose.yml` para gerenciar os certificados.
+    - [ ] **2. Compartilhar Volumes:** Configurar volumes para que o Nginx possa acessar os certificados gerados pelo Certbot (`certbot-conf` e `certbot-www`).
+    - [ ] **3. Atualizar Configuração do Nginx:** Modificar `nginx.conf` para:
+      - Servir o desafio HTTP-01 do Let's Encrypt na rota `/.well-known/acme-challenge/`.
+      - Ouvir na porta 443 (SSL) e apontar para os caminhos dos certificados.
+      - Redirecionar todo o tráfego da porta 80 (HTTP) para 443 (HTTPS).
+    - [ ] **4. Criar Script de Inicialização (`init-letsencrypt.sh`):** Automatizar o processo inicial de obtenção de certificados para evitar o problema "ovo e galinha" (Nginx precisa dos certificados para iniciar, mas o Certbot precisa do Nginx rodando para gerá-los).
+    - [ ] **5. Configurar Renovação Automática:** Adicionar um comando ou cron job para executar a renovação dos certificados periodicamente.
+  - [ ] **Go-Live:**
+    - [ ] Validar o acesso via `https://esleynathan.com.br` e realizar testes finais de ponta a ponta.
 
 ---
 
