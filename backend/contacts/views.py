@@ -1,10 +1,13 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 from .models import Contact
 from .serializers import ContactSerializer
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class ContactViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gerenciar mensagens de contato via API REST.
