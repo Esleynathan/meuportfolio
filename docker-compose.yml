@@ -26,6 +26,7 @@ services:
       - ALLOWED_HOSTS=${ALLOWED_HOSTS:-esleynathan.com.br,www.esleynathan.com.br,localhost,backend}
     volumes:
       - static_data:/app/staticfiles
+      - media_data:/app/media
     depends_on:
       - db
     networks:
@@ -42,6 +43,7 @@ services:
       - "443:443"
     volumes:
       - static_data:/app/staticfiles
+      - media_data:/app/media
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
     depends_on:
@@ -83,6 +85,7 @@ services:
 volumes:
   postgres_data:
   static_data:
+  media_data:
   frontend_node_modules:
   certbot-conf:
   certbot-www:
