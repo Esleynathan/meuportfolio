@@ -1,13 +1,20 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAdminUser
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authentication import SessionAuthentication
 from .models import Contact
 from .serializers import ContactSerializer
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    """
+    Classe de autenticação que não exige CSRF token.
+    Usada apenas para APIs públicas como o formulário de contato.
+    """
+    def enforce_csrf(self, request):
+        return  # Não faz nada, isenta a verificação CSRF
+
+
 class ContactViewSet(viewsets.ModelViewSet):
     """
     ViewSet para gerenciar mensagens de contato via API REST.
@@ -20,6 +27,7 @@ class ContactViewSet(viewsets.ModelViewSet):
 
     queryset = Contact.objects.all().order_by('-created_at')
     serializer_class = ContactSerializer
+    authentication_classes = [CsrfExemptSessionAuthentication]  # Isenta CSRF para esta API
     http_method_names = ['get', 'post', 'head', 'options']  # Desabilita PUT, PATCH, DELETE via API
 
     def get_permissions(self):
