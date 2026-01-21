@@ -1,0 +1,47 @@
+# =============================================================================
+# TRAEFIK - Proxy Reverso Central
+# =============================================================================
+# Este arquivo deve ser colocado em uma pasta separada no servidor (ex: /opt/traefik)
+# e iniciado ANTES dos outros projetos.
+#
+# Uso:
+#   docker compose up -d
+# =============================================================================
+
+services:
+  traefik:
+    image: traefik:v3.0
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - TRAEFIK_ACME_EMAIL=${ACME_EMAIL:-admin@esleynathan.com.br}
+    volumes:
+      # Acesso ao Docker socket para descoberta automática de containers
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Configuração do Traefik
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      # Armazenamento dos certificados SSL
+      - ./acme.json:/acme.json
+    networks:
+      - traefik-public
+    labels:
+      # Dashboard do Traefik (opcional - acesse em traefik.seudominio.com)
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.esleynathan.com.br`)"
+      - "traefik.http.routers.traefik-dashboard.entrypoints=websecure"
+      - "traefik.http.routers.traefik-dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.traefik-dashboard.service=api@internal"
+      - "traefik.http.routers.traefik-dashboard.middlewares=traefik-auth"
+      # Autenticação básica para o dashboard (user: admin, senha: admin) - ALTERE!
+      # Gere nova senha com: echo $(htpasswd -nb usuario senha) | sed -e s/\\$/\\$\\$/g
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=admin:$$apr1$$xyz$$hashedpassword"
+
+networks:
+  traefik-public:
+    name: traefik-public
+    driver: bridge

@@ -1,0 +1,39 @@
+# =============================================================================
+# Configuração do Traefik
+# =============================================================================
+
+api:
+  dashboard: true
+  insecure: false
+
+log:
+  level: INFO
+
+# Pontos de entrada (portas)
+entryPoints:
+  web:
+    address: ":80"
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+          permanent: true
+  websecure:
+    address: ":443"
+
+# Descoberta automática de serviços via Docker
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+    network: traefik-public
+
+# Certificados SSL automáticos com Let's Encrypt
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: admin@esleynathan.com.br
+      storage: /acme.json
+      httpChallenge:
+        entryPoint: web

@@ -1,22 +1,27 @@
 # Status do Projeto - Portfolio Ésley Nathan
 
-**Última atualização**: 2025-12-09 | **Fase Atual**: MVP 5 - DEPLOY CONCLUÍDO ✅
+**Última atualização**: 2025-12-10 | **Fase Atual**: MVP 6 - MELHORIAS PÓS-DEPLOY ✅
 
 ---
 
-## 🎯 Status Atual: MVP 5 - DEPLOY CONCLUÍDO ✅
+## 🎯 Status Atual: MVP 6 - MELHORIAS PÓS-DEPLOY ✅
 
-O projeto foi **publicado com sucesso em produção**! A aplicação está rodando em ambiente de produção na nuvem (DigitalOcean) com SSL/HTTPS configurado via Let's Encrypt.
+O projeto está **online e funcional** com melhorias críticas implementadas! Todos os problemas de integração entre desenvolvimento e produção foram resolvidos.
 
 🌐 **Site Online:** https://esleynathan.com.br
 
-Todas as funcionalidades estão operacionais:
+### Funcionalidades Operacionais
 - ✅ Frontend Angular servido via Nginx com SSL
 - ✅ Backend Django REST API rodando
 - ✅ PostgreSQL como banco de dados
 - ✅ Certificados SSL válidos (renováveis automaticamente)
 - ✅ Redirecionamento automático HTTP → HTTPS
 - ✅ Arquivos estáticos otimizados
+- ✅ **Arquivos de mídia (uploads) persistidos e servidos**
+- ✅ **Dark mode como tema padrão**
+- ✅ **Ambientes dev/prod corretamente separados**
+- ✅ **Rotas da API corrigidas**
+- ✅ **Formulário de contato funcional (CSRF resolvido)**
 - ✅ Endpoints de API e Admin protegidos contra acesso não autorizado
 
 ---
@@ -28,11 +33,58 @@ Todas as funcionalidades estão operacionais:
 | Desenvolvimento (MVP 1-4) | ✅ 100% Concluído |
 | Documentação | ✅ Completa e Atualizada |
 | Deploy (MVP 5) | ✅ 100% Concluído |
-| Site em Produção | 🌐 Online com SSL |
+| Melhorias Pós-Deploy (MVP 6) | ✅ 100% Concluído |
+| Site em Produção | 🌐 Online e Funcional |
 
 ---
 
-## 🚀 Próximos Passos: MVP 5 - Deploy
+## 🎉 MVP 6 - Melhorias Pós-Deploy (CONCLUÍDO)
+
+Fase focada em resolver problemas críticos identificados após o deploy inicial e melhorar a experiência do usuário.
+
+### Problemas Resolvidos
+
+1. **✅ Configuração de Ambientes (Dev vs Prod)**
+   - Problema: Frontend em produção usava `localhost:8000/api` ao invés da URL real
+   - Causa: Faltava configuração `fileReplacements` no `angular.json`
+   - Solução: Adicionado `fileReplacements` para substituir `environment.ts` por `environment.prod.ts` no build de produção
+   - Arquivos modificados: `frontend/angular.json`, `frontend/src/environments/environment.prod.ts`
+
+2. **✅ Rotas da API Django**
+   - Problema: Endpoints `/api/projects/` e `/api/skills/` retornavam 404
+   - Causa: DRF Router registrado com string vazia `r''` ao invés do nome do recurso
+   - Solução: Corrigido registro do router para `r'projects'`, `r'skills'`, `r'contacts'`
+   - Arquivos modificados: `backend/projects/urls.py`, `backend/skills/urls.py`, `backend/contacts/urls.py`
+
+3. **✅ Arquivos de Mídia (Imagens de Projetos/Skills)**
+   - Problema: Imagens não carregavam no site (404)
+   - Causa: Nginx não configurado para servir `/media/` e volumes não persistidos
+   - Solução:
+     - Criado volume `media_data` compartilhado entre backend e nginx
+     - Adicionada rota `/media/` no `nginx.conf`
+     - Imagens agora persistem entre rebuilds
+   - Arquivos modificados: `docker-compose.yml`, `frontend/nginx.conf`
+
+4. **✅ Dark Mode como Padrão**
+   - Implementado: Dark mode ativado por padrão na primeira visita
+   - Lógica invertida: Só ativa light mode se usuário escolher explicitamente
+   - Arquivo modificado: `frontend/src/app/components/navbar/navbar.component.ts`
+
+5. **✅ Erro CSRF no Formulário de Contato**
+   - Problema: Envio de mensagens retornava 403 "CSRF token missing"
+   - Causa: Django exige CSRF token por padrão, mas API REST pública não envia
+   - Solução: Implementada classe `CsrfExemptSessionAuthentication` usando método oficial do DRF
+   - Arquivo modificado: `backend/contacts/views.py`
+
+### Melhorias de Infraestrutura
+
+- ✅ **Persistência de Dados**: Volumes nomeados para banco, static files e media files
+- ✅ **Backup**: Documentado processo de backup do PostgreSQL e arquivos de mídia
+- ✅ **Segurança**: CSRF isento apenas no endpoint público de contato, mantendo proteção nos demais
+
+---
+
+## 🚀 MVP 5 - Deploy (CONCLUÍDO)
 
 **Objetivo**: Publicar a aplicação online em um ambiente de produção robusto, seguro e automatizado.
 O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
@@ -93,11 +145,12 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
 - Tailwind CSS 3
 - RxJS
 
-### DevOps
-- Docker & Docker Compose
-- Nginx (reverse proxy e SSL)
-- Let's Encrypt / Certbot (SSL/TLS)
+### DevOps & Infraestrutura
+- Docker & Docker Compose (profiles: dev/prod)
+- Nginx (reverse proxy, SSL, static & media files)
+- Let's Encrypt / Certbot (SSL/TLS automático)
 - DigitalOcean (VM Ubuntu)
+- Volumes Docker (persistência de dados: postgres_data, static_data, media_data)
 
 ---
 
@@ -183,6 +236,38 @@ O plano de ação detalhado para esta fase está em **MVP5_DEPLOY_PLAN.md**.
    - Configuração temporária HTTP-only durante aquisição de certificados
    - Depois do SSL gerado, migrar para configuração HTTPS completa
    - Renovação automática funciona via container certbot com loop de 12h
+
+11. **Angular fileReplacements é essencial para múltiplos ambientes**
+   - `environment.ts` e `environment.prod.ts` não são substituídos automaticamente
+   - Sem `fileReplacements` no `angular.json`, build sempre usa `environment.ts`
+   - Configuração necessária em `angular.json` > `projects` > `architect` > `build` > `configurations` > `production`
+   - Sintaxe: `{"replace": "src/environments/environment.ts", "with": "src/environments/environment.prod.ts"}`
+
+12. **Django REST Framework Router precisa de prefixo de recurso**
+   - Registrar router com `r''` (string vazia) causa 404 em rotas
+   - Sempre usar nome do recurso: `router.register(r'projects', ProjectViewSet)`
+   - O DRF combina `path('api/', include('projects.urls'))` + `r'projects'` = `/api/projects/`
+   - String vazia só funciona se a inclusão já tiver o caminho completo
+
+13. **Arquivos de mídia precisam de volume persistente**
+   - Uploads salvos apenas no container são perdidos em rebuilds
+   - Criar volume nomeado (`media_data`) e mapear no backend (`/app/media`)
+   - Nginx precisa acessar o mesmo volume para servir as imagens
+   - Adicionar rota `location /media/` no nginx.conf com `alias /app/media/`
+
+14. **CSRF no Django REST Framework requer abordagem específica**
+   - Decorator `@csrf_exempt` não funciona com ViewSets do DRF
+   - Criar classe customizada que herda de `SessionAuthentication`
+   - Sobrescrever método `enforce_csrf()` para retornar vazio
+   - Aplicar via `authentication_classes = [CsrfExemptSessionAuthentication]` no ViewSet
+   - Mantém CORS e validação de dados, isenta apenas CSRF
+
+15. **Volumes Docker persistem dados independente dos containers**
+   - Volumes nomeados (ex: `postgres_data`) são separados dos containers
+   - `docker-compose down` remove containers mas **mantém volumes**
+   - Apenas `docker-compose down -v` ou `docker volume rm` deletam volumes
+   - Sempre fazer backup antes de comandos destrutivos
+   - Comando seguro de backup PostgreSQL: `docker exec portfolio-db pg_dump -U user db > backup.sql`
 
 ---
 
