@@ -11,6 +11,9 @@ class ProjectSerializer(serializers.ModelSerializer):
     # Campo customizado que retorna lista de tecnologias
     technologies_list = serializers.SerializerMethodField()
 
+    # Campo customizado que retorna o label da categoria
+    category_display = serializers.SerializerMethodField()
+
     class Meta:
         model = Project
         fields = [
@@ -22,6 +25,8 @@ class ProjectSerializer(serializers.ModelSerializer):
             'image',
             'technologies',
             'technologies_list',  # Campo adicional com lista
+            'category',
+            'category_display',  # Campo adicional com label legível
             'github_url',
             'live_url',
             'featured',
@@ -37,3 +42,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         Ex: "Django, React, PostgreSQL" → ["Django", "React", "PostgreSQL"]
         """
         return obj.get_technologies_list()
+
+    def get_category_display(self, obj):
+        """
+        Retorna o label legível da categoria.
+        Ex: "automation" → "Automação"
+        """
+        return obj.get_category_display()

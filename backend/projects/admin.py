@@ -7,11 +7,11 @@ class ProjectAdmin(admin.ModelAdmin):
     """
     Configuração do admin para o model Project.
     """
-    list_display = ['title', 'featured', 'order', 'created_at']
-    list_filter = ['featured', 'created_at']
+    list_display = ['title', 'category', 'featured', 'order', 'created_at']
+    list_filter = ['category', 'featured', 'created_at']
     search_fields = ['title', 'description', 'technologies']
     prepopulated_fields = {'slug': ('title',)}
-    list_editable = ['featured', 'order']
+    list_editable = ['category', 'featured', 'order']
     readonly_fields = ['created_at', 'updated_at']
 
     fieldsets = (
@@ -25,7 +25,7 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': ('technologies', 'github_url', 'live_url')
         }),
         ('Configurações', {
-            'fields': ('featured', 'order')
+            'fields': ('category', 'featured', 'order')
         }),
         ('Timestamps', {
             'fields': ('created_at', 'updated_at'),

@@ -2,6 +2,7 @@ from rest_framework import viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Project
 from .serializers import ProjectSerializer
 
@@ -17,13 +18,15 @@ class ProjectViewSet(viewsets.ModelViewSet):
     - PUT    /api/projects/{id}/     → Atualiza projeto
     - DELETE /api/projects/{id}/     → Deleta projeto
     - GET    /api/projects/featured/ → Lista apenas projetos em destaque
+    - GET    /api/projects/?category=automation → Filtra por categoria
     """
 
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['category', 'featured']
     search_fields = ['title', 'description', 'technologies']
-    ordering_fields = ['order', 'created_at']
+    ordering_fields = ['order', 'created_at', 'category']
     ordering = ['order', '-created_at']  # Ordenação padrão
 
     def get_permissions(self):

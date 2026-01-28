@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'rest_framework',
+    'django_filters',
     'corsheaders', # Gerencia permissões de Cross-Origin
     'drf_spectacular',
 
@@ -164,6 +165,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',  # Por enquanto aberto, depois configurar autenticação
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
     ],
 }
 

@@ -8,6 +8,12 @@ class Project(models.Model):
     Armazena informações sobre projetos desenvolvidos.
     """
 
+    CATEGORY_CHOICES = [
+        ('automation', 'Automação'),
+        ('challenges', 'Desafios Técnicos'),
+        ('applications', 'Aplicações'),
+    ]
+
     # Informações básicas
     title = models.CharField(
         max_length=200,
@@ -60,6 +66,15 @@ class Project(models.Model):
         null=True,
         verbose_name="Link do projeto",
         help_text="URL do projeto em produção"
+    )
+
+    # Categoria
+    category = models.CharField(
+        max_length=20,
+        choices=CATEGORY_CHOICES,
+        default='applications',
+        verbose_name='Categoria',
+        help_text='Categoria do projeto (Automação, Desafios Técnicos, Aplicações)'
     )
 
     # Configurações

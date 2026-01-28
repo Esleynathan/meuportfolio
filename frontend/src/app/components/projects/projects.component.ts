@@ -13,6 +13,20 @@ export class ProjectsComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
 
+  // Configuração de categorias
+  categoryOrder: string[] = ['automation', 'challenges', 'applications'];
+  categoryIcons: Record<string, string> = {
+    'automation': 'fas fa-robot',
+    'challenges': 'fas fa-puzzle-piece',
+    'applications': 'fas fa-laptop-code'
+  };
+  categoryLabels: Record<string, string> = {
+    'automation': 'Automação',
+    'challenges': 'Desafios Técnicos',
+    'applications': 'Aplicações'
+  };
+  groupedProjects: Record<string, Project[]> = {};
+
   constructor(
     private projectsService: ProjectsService,
     private translationService: TranslationService
@@ -29,6 +43,7 @@ export class ProjectsComponent implements OnInit {
     this.projectsService.getProjects().subscribe({
       next: (data) => {
         this.projects = data;
+        this.groupProjectsByCategory();
         this.isLoading = false;
       },
       error: (err) => {
@@ -43,5 +58,22 @@ export class ProjectsComponent implements OnInit {
     // Se a imagem falhar ao carregar, esconde o elemento img
     const imgElement = event.target as HTMLImageElement;
     imgElement.style.display = 'none';
+  }
+
+  groupProjectsByCategory(): void {
+    this.groupedProjects = {};
+    for (const project of this.projects) {
+      const cat = project.category || 'applications';
+      if (!this.groupedProjects[cat]) {
+        this.groupedProjects[cat] = [];
+      }
+      this.groupedProjects[cat].push(project);
+    }
+  }
+
+  getVisibleCategories(): string[] {
+    return this.categoryOrder.filter(cat =>
+      this.groupedProjects[cat] && this.groupedProjects[cat].length > 0
+    );
   }
 }

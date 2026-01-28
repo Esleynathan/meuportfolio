@@ -8,6 +8,8 @@ export interface Project {
   github_url: string;
   live_url?: string;
   image?: string;
+  category: string;
+  category_display?: string;
   featured: boolean;
   order: number;
   created_at: string;

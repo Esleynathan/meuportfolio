@@ -14,95 +14,106 @@
       <button (click)="loadProjects()" class="btn-primary">{{ 'projects.retry' | translate }}</button>
     </div>
 
-    <!-- Projects Grid -->
-    <div *ngIf="!isLoading && !error" class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div
-          *ngFor="let project of projects"
-          class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-gray-200 dark:border-gray-700 relative group"
-        >
-          <!-- Featured Badge -->
+    <!-- Projects by Category -->
+    <div *ngIf="!isLoading && !error" class="space-y-16">
+
+      <!-- Iterate over categories -->
+      <div *ngFor="let category of getVisibleCategories()" class="max-w-6xl mx-auto">
+        <!-- Category Header -->
+        <h3 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-8 flex items-center pb-4 border-b border-gray-200 dark:border-gray-700">
+          <i [class]="categoryIcons[category]" class="text-primary-600 mr-4 text-2xl"></i>
+          <span>{{ categoryLabels[category] }}</span>
+        </h3>
+
+        <!-- Projects Grid for this category -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div
-            *ngIf="project.featured"
-            class="absolute top-4 right-4 z-10 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"
+            *ngFor="let project of groupedProjects[category]"
+            class="bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-md hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-gray-200 dark:border-gray-700 relative group"
           >
-            {{ 'projects.featured' | translate }}
-          </div>
-
-          <!-- Project Image -->
-          <div class="relative h-48 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-gray-700 dark:to-gray-800 overflow-hidden">
-            <img
-              *ngIf="project.image"
-              [src]="project.image"
-              [alt]="project.title + ' screenshot'"
-              loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-              (error)="handleImageError($event)"
-            />
+            <!-- Featured Badge -->
             <div
-              *ngIf="!project.image"
-              class="w-full h-full flex items-center justify-center"
+              *ngIf="project.featured"
+              class="absolute top-4 right-4 z-10 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"
             >
-              <i class="fas fa-laptop-code text-6xl text-primary-300 dark:text-gray-600"></i>
-            </div>
-          </div>
-
-          <!-- Project Content -->
-          <div class="p-6">
-            <!-- Title -->
-            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200">
-              {{ project.title }}
-            </h3>
-
-            <!-- Description -->
-            <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed line-clamp-3">
-              {{ project.description }}
-            </p>
-
-            <!-- Technologies Badges -->
-            <div class="flex flex-wrap gap-2 mb-4">
-              <span
-                *ngFor="let tech of project.technologies.split(',')"
-                class="text-xs font-semibold bg-primary-50 dark:bg-gray-800 text-primary-700 dark:text-primary-300 px-3 py-1 rounded-full border border-primary-200 dark:border-gray-700 hover:bg-primary-100 dark:hover:bg-gray-700 transition-colors duration-200"
-              >
-                {{ tech.trim() }}
-              </span>
+              {{ 'projects.featured' | translate }}
             </div>
 
-            <!-- Links -->
-            <div class="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-800">
-              <a
-                *ngIf="project.github_url"
-                [href]="project.github_url"
-                target="_blank"
-                rel="noopener noreferrer"
-                [attr.aria-label]="('projects.code' | translate) + ': ' + project.title"
-                class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-700 dark:hover:text-primary-400 transition-colors duration-200"
+            <!-- Project Image -->
+            <div class="relative h-48 bg-gradient-to-br from-primary-100 to-purple-100 dark:from-gray-700 dark:to-gray-800 overflow-hidden">
+              <img
+                *ngIf="project.image"
+                [src]="project.image"
+                [alt]="project.title + ' screenshot'"
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                (error)="handleImageError($event)"
+              />
+              <div
+                *ngIf="!project.image"
+                class="w-full h-full flex items-center justify-center"
               >
-                <i class="fab fa-github text-lg"></i>
-                <span>{{ 'projects.code' | translate }}</span>
-              </a>
-              <a
-                *ngIf="project.live_url"
-                [href]="project.live_url"
-                target="_blank"
-                rel="noopener noreferrer"
-                [attr.aria-label]="('projects.demo' | translate) + ': ' + project.title"
-                class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-700 dark:hover:text-primary-400 transition-colors duration-200"
-              >
-                <i class="fas fa-external-link-alt text-lg"></i>
-                <span>{{ 'projects.demo' | translate }}</span>
-              </a>
+                <i class="fas fa-laptop-code text-6xl text-primary-300 dark:text-gray-600"></i>
+              </div>
+            </div>
+
+            <!-- Project Content -->
+            <div class="p-6">
+              <!-- Title -->
+              <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-200">
+                {{ project.title }}
+              </h4>
+
+              <!-- Description -->
+              <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm leading-relaxed line-clamp-3">
+                {{ project.description }}
+              </p>
+
+              <!-- Technologies Badges -->
+              <div class="flex flex-wrap gap-2 mb-4">
+                <span
+                  *ngFor="let tech of project.technologies.split(',')"
+                  class="text-xs font-semibold bg-primary-50 dark:bg-gray-800 text-primary-700 dark:text-primary-300 px-3 py-1 rounded-full border border-primary-200 dark:border-gray-700 hover:bg-primary-100 dark:hover:bg-gray-700 transition-colors duration-200"
+                >
+                  {{ tech.trim() }}
+                </span>
+              </div>
+
+              <!-- Links -->
+              <div class="flex gap-3 pt-4 border-t border-gray-100 dark:border-gray-800">
+                <a
+                  *ngIf="project.github_url"
+                  [href]="project.github_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  [attr.aria-label]="('projects.code' | translate) + ': ' + project.title"
+                  class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-700 dark:hover:text-primary-400 transition-colors duration-200"
+                >
+                  <i class="fab fa-github text-lg"></i>
+                  <span>{{ 'projects.code' | translate }}</span>
+                </a>
+                <a
+                  *ngIf="project.live_url"
+                  [href]="project.live_url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  [attr.aria-label]="('projects.demo' | translate) + ': ' + project.title"
+                  class="flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:text-primary-700 dark:hover:text-primary-400 transition-colors duration-200"
+                >
+                  <i class="fas fa-external-link-alt text-lg"></i>
+                  <span>{{ 'projects.demo' | translate }}</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Empty State -->
-        <div *ngIf="projects.length === 0" class="col-span-full text-center py-12">
-          <i class="fas fa-folder-open text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
-          <p class="text-gray-600 dark:text-gray-400">{{ 'projects.emptyState1' | translate }}</p>
-          <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">{{ 'projects.emptyState2' | translate }}</p>
-        </div>
+      <!-- Empty State (if no projects at all) -->
+      <div *ngIf="projects.length === 0" class="max-w-6xl mx-auto text-center py-12">
+        <i class="fas fa-folder-open text-6xl text-gray-300 dark:text-gray-600 mb-4"></i>
+        <p class="text-gray-600 dark:text-gray-400">{{ 'projects.emptyState1' | translate }}</p>
+        <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">{{ 'projects.emptyState2' | translate }}</p>
       </div>
     </div>
   </div>
